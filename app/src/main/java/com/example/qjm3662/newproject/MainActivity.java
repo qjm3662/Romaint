@@ -40,20 +40,20 @@ public class MainActivity extends Activity implements OnClickListener {
         fragmentManager = getFragmentManager();
         init();
         setTabselection(0);
-        // 获取Calendar实例
-        Calendar calendar = Calendar.getInstance();
-        // 输出日期信息，还有许多常量字段，我就不再写出来了
-        System.out.println(calendar.get(Calendar.YEAR) + "年"
-                + calendar.get(Calendar.MONTH) + "月"
-                + calendar.get(Calendar.DAY_OF_MONTH) + "日"
-                + calendar.get(Calendar.HOUR_OF_DAY) + "时"
-                + calendar.get(Calendar.MINUTE) + "分"
-                + calendar.get(Calendar.SECOND) + "秒" + "\n今天是星期"
-                + calendar.get(Calendar.DAY_OF_WEEK) + "是今年的第"
-                + calendar.get(Calendar.WEEK_OF_YEAR) + "周");
-        String time = DateFormat
-                      .format("yyyy-MM-dd kk:mm:ss", calendar).toString();
-        System.out.println(time);
+//        // 获取Calendar实例
+//        Calendar calendar = Calendar.getInstance();
+//        // 输出日期信息，还有许多常量字段，我就不再写出来了
+//        System.out.println(calendar.get(Calendar.YEAR) + "年"
+//                + calendar.get(Calendar.MONTH) + "月"
+//                + calendar.get(Calendar.DAY_OF_MONTH) + "日"
+//                + calendar.get(Calendar.HOUR_OF_DAY) + "时"
+//                + calendar.get(Calendar.MINUTE) + "分"
+//                + calendar.get(Calendar.SECOND) + "秒" + "\n今天是星期"
+//                + calendar.get(Calendar.DAY_OF_WEEK) + "是今年的第"
+//                + calendar.get(Calendar.WEEK_OF_YEAR) + "周");
+//        String time = DateFormat
+//                      .format("yyyy-MM-dd kk:mm:ss", calendar).toString();
+//        System.out.println(time);
     }
 
     @Override
@@ -93,10 +93,12 @@ public class MainActivity extends Activity implements OnClickListener {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch (resultCode){
+        switch (requestCode){
             case Edit_Acticity.REQUEST_CODE_SAVE:
+                System.out.println("save fail");
                 if(storyFragment != null){
-                    storyFragment.refreshStoryListView();
+                    System.out.println("save success");
+                    storyFragment.slideAdapter.notifyDataSetChanged();
                 }
                 break;
         }

@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.example.qjm3662.newproject.Data.Story;
+import com.example.qjm3662.newproject.Data.StoryDB;
 import com.example.qjm3662.newproject.model.MessageItem;
 import com.example.qjm3662.newproject.model.MessageItemList;
 
@@ -17,7 +19,6 @@ public class SlideAdapter extends BaseAdapter implements SlideView.OnSlideListen
 
 	private static final String TAG = "SlideAdapter";
 	private LayoutInflater mInflater;
-	private MessageItemList list;
 	private SlideView mLastSlideViewWithStatusOn;
 	private Context context;
 
@@ -25,19 +26,18 @@ public class SlideAdapter extends BaseAdapter implements SlideView.OnSlideListen
 		super();
 		this.context = context;
 		mInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		list = MessageItemList.getList();
 	}
 
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
-		return list.size();
+		return App.StoryList.size();
 	}
 
 	@Override
 	public Object getItem(int position) {
 		// TODO Auto-generated method stub
-		return list.get(position);
+		return App.StoryList.get(position);
 	}
 
 	@Override
@@ -50,7 +50,6 @@ public class SlideAdapter extends BaseAdapter implements SlideView.OnSlideListen
 	public View getView(final int position, View convertView, ViewGroup parent) {
 		ViewHolder holder;
 		SlideView slideView = (SlideView) convertView;
-
 		/******新发现******/
 		/*
 		 * 在通过adapter生成view时，convertView并不是一直是一个，也就是说下面的if语句会运行多次
@@ -66,7 +65,7 @@ public class SlideAdapter extends BaseAdapter implements SlideView.OnSlideListen
 
 		if(slideView == null){
 			//Log.e(TAG,"进来了吗");
-			View itemView = mInflater.inflate(R.layout.listitem_story, null);
+			View itemView = mInflater.inflate(R.layout.listview, null);
 			slideView = new SlideView(context);
 			slideView.setContentView(itemView);
 
@@ -77,7 +76,7 @@ public class SlideAdapter extends BaseAdapter implements SlideView.OnSlideListen
 			holder = (ViewHolder) slideView.getTag();
 		}
 
-		MessageItem item = list.get(position);
+		Story item = App.StoryList.get(position);
 		item.slideView = slideView;
 		//调用notifyDataSetChanged()后重新绘制ListView时 使用的还是上次的convertView
 		//也就是说convertView的状态不会改变  比如打开状态
@@ -88,14 +87,16 @@ public class SlideAdapter extends BaseAdapter implements SlideView.OnSlideListen
 		//所以应该直接调用  scrollTo()
 		item.slideView.shrink();
 
-		holder.tv_msg.setText(item.msg);
+		holder.tv_title.setText(item.getTitle());
+		holder.tv_content.setText(item.getContent());
 		//为什么不会产生 线程问题？ 为什么可以在getView中对tv_delete操作？
 		holder.tv_delete.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				//Log.e(TAG,"position"+position);
-				list.delete(position);
+				App.StoryList.remove(position);
+				//App.dbWrite.delete(StoryDB.TABLE_NAME_STORY,)
 				notifyDataSetChanged();
 			}
 		});
@@ -115,11 +116,13 @@ public class SlideAdapter extends BaseAdapter implements SlideView.OnSlideListen
 	}
 
 	private static class ViewHolder {
-		public TextView tv_msg;
+		public TextView tv_title;
+		public TextView tv_content;
 		public TextView tv_delete;
 
 		ViewHolder(View view) {
-			tv_msg = (TextView)view.findViewById(R.id.tv_listitem);
+			tv_title = (TextView)view.findViewById(R.id.finding_listView_title);
+			tv_content = (TextView) view.findViewById(R.id.finding_listView_introduce);
 			tv_delete = (TextView)view.findViewById(R.id.delete_slide);
 		}
 	}

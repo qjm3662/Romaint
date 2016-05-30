@@ -1,5 +1,7 @@
 package com.example.qjm3662.newproject.Data;
 
+import com.example.qjm3662.newproject.SlideView;
+
 import java.util.Calendar;
 import java.util.Date;
 
@@ -7,6 +9,7 @@ import java.util.Date;
  * Created by qjm3662 on 2016/5/29 0029.
  */
 public class Story {
+    int local_id;
     String id;
     String title;
     String flags;               //故事的标签
@@ -17,6 +20,15 @@ public class Story {
     int AuthorID;               //作者的Id
     int likeCount;              //点赞总数
     boolean isOwn;              //是否是自己的故事
+    public SlideView slideView;
+
+    public int getLocal_id() {
+        return local_id;
+    }
+
+    public void setLocal_id(int local_id) {
+        this.local_id = local_id;
+    }
 
     public String getId() {
         return id;

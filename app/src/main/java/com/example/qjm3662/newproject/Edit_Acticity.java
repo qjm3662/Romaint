@@ -55,6 +55,7 @@ public class Edit_Acticity extends Activity implements View.OnClickListener {
 
         Intent intent = getIntent();
         JUDGE = intent.getBooleanExtra("JUDGE",false);
+        System.out.println("look : "+JUDGE);
         if(JUDGE){
             et_title.setText(intent.getStringExtra(EDIT_TITLE));
             et_input.setText(intent.getStringExtra(EDIT_CONTENT));
@@ -81,7 +82,7 @@ public class Edit_Acticity extends Activity implements View.OnClickListener {
                 break;
             case R.id.save:
                 save_story();
-                startActivityForResult(new Intent(Edit_Acticity.this,MainActivity.class),REQUEST_CODE_SAVE);
+                //startActivityForResult(new Intent(Edit_Acticity.this,MainActivity.class),REQUEST_CODE_SAVE);
                 finish();
                 overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
                 break;
@@ -115,12 +116,24 @@ public class Edit_Acticity extends Activity implements View.OnClickListener {
         cv.put(StoryDB.COLUMN_NAME_TITLE,et_title.getText().toString());
         cv.put(StoryDB.COLUMN_NAME_CONTENT, et_input.getText().toString());
         cv.put(StoryDB.COLUMN_NAME_PUBLIC_ENABLE,a == 0);
+
+        Story story;
+        System.out.println(JUDGE + String.valueOf(getIntent().getIntExtra("ID", 1)+""));
         if (JUDGE){
             dbWrite.update(StoryDB.TABLE_NAME_STORY, cv, StoryDB.COLUMN_NAME_ID + "=?", new String[]{String.valueOf(getIntent().getIntExtra("ID", 1))
             });
+            story = App.StoryList.get(getIntent().getIntExtra("position",-1));
+            story.setTitle(et_title.getText().toString());
+            story.setContent(et_input.getText().toString());
+            System.out.println(getIntent().getIntExtra("position",-1));
+            App.StoryList.set(getIntent().getIntExtra("position",-1),story);
             System.out.println("update success");
         }else{
+            story = new Story();
+            story.setTitle(et_title.getText().toString());
+            story.setContent(et_input.getText().toString());
             dbWrite.insert(StoryDB.TABLE_NAME_STORY, null, cv);
+            App.StoryList.add(story);
             System.out.println("create success");
         }
 
