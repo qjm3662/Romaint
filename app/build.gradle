@@ -1,0 +1,32 @@
+//标识他是一个app
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "24.0.0 rc3"
+
+    defaultConfig {
+        //包名
+        applicationId "com.example.qjm3662.newproject"
+        minSdkVersion 17
+        //目标版本
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+
+        buildTypes {
+            release {
+                //混淆代码
+                minifyEnabled false
+                proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            }
+        }
+    }
+
+    dependencies {
+        compile fileTree(dir: 'libs', include: ['*.jar'])
+        testCompile 'junit:junit:4.12'
+        compile 'com.android.support:appcompat-v7:23.2.0'
+        compile 'com.zhy:okhttputils:2.4.1'
+    }
+}
