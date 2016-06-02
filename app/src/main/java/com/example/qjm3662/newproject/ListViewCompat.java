@@ -7,7 +7,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ListView;
 
-import com.example.qjm3662.newproject.model.MessageItem;
+import com.example.qjm3662.newproject.Data.Story;
+import com.example.qjm3662.newproject.Slide.SlideView;
 
 
 public class ListViewCompat extends ListView {
@@ -39,7 +40,8 @@ public class ListViewCompat extends ListView {
 			}
 		}
 	}
-	//���ɾ����ť ���������
+
+	//点击删除按钮 不会出触发
 	public boolean onTouchEvent (MotionEvent event) {
 		switch (event.getAction()) {
 		case MotionEvent.ACTION_DOWN: {
@@ -47,11 +49,11 @@ public class ListViewCompat extends ListView {
 			int y = (int) event.getY();
 			int position = pointToPosition(x, y);
 			Log.e(TAG,"position" + position);
-//			if (position != INVALID_POSITION) {
-//				MessageItem item = (MessageItem) getItemAtPosition(position);
-//				mFocusedItenView = item.slideView;
-//				Log.e(TAG,"mFocusedItenView=" + mFocusedItenView);
-//			}
+			if (position != INVALID_POSITION) {
+				Story item = (Story) getItemAtPosition(position);
+				mFocusedItenView = item.slideView;
+				Log.e(TAG,"mFocusedItenView=" + mFocusedItenView);
+			}
 		}
 		default:
 			break;

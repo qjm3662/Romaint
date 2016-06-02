@@ -1,4 +1,4 @@
-package com.example.qjm3662.newproject;
+package com.example.qjm3662.newproject.Slide;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -10,6 +10,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Scroller;
 import android.widget.TextView;
+
+import com.example.qjm3662.newproject.R;
 
 public class SlideView extends LinearLayout {
 

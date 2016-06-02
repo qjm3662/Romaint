@@ -4,9 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context="com.example.qjm3662.newproject.Edit_Acticity">
+    tools:context=".StoryView.Edit_Acticity">
 
     <LinearLayout
+
         android:padding="5dp"
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -40,6 +41,8 @@
 
 
     <LinearLayout
+        android:layout_marginLeft="40px"
+        android:layout_marginRight="40px"
         android:layout_marginTop="50dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -66,6 +69,23 @@
                 android:gravity="center"
                 android:textColor="@color/black" />
 
+            <TextView
+                android:id="@+id/tv_addPhoto"
+                android:textSize="16sp"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/black"
+                android:text="添加图片"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/tv_hide_title"
+                android:textSize="16sp"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/black"
+                android:text="隐藏标题栏"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
             <View
                 android:layout_width="0dp"
                 android:layout_height="match_parent"

@@ -1,24 +1,21 @@
-package com.example.qjm3662.newproject;
+package com.example.qjm3662.newproject.Main_UI;
 
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.format.DateFormat;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.ImageView;
 
+import com.example.qjm3662.newproject.App;
 import com.example.qjm3662.newproject.Finding.Finding;
 import com.example.qjm3662.newproject.LoginAndRegister.LoginActivity;
-import com.example.qjm3662.newproject.model.MessageItem;
-import com.example.qjm3662.newproject.model.MessageItemList;
+import com.example.qjm3662.newproject.R;
+import com.example.qjm3662.newproject.StoryView.Edit_Acticity;
 
-import java.sql.Time;
-import java.util.Calendar;
 
 public class MainActivity extends Activity implements OnClickListener {
 
@@ -39,7 +36,7 @@ public class MainActivity extends Activity implements OnClickListener {
         setContentView(R.layout.activity_main);
         fragmentManager = getFragmentManager();
         init();
-        setTabselection(0);
+        setTab_selection(0);
 //        // 获取Calendar实例
 //        Calendar calendar = Calendar.getInstance();
 //        // 输出日期信息，还有许多常量字段，我就不再写出来了
@@ -60,16 +57,16 @@ public class MainActivity extends Activity implements OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.story:
-                setTabselection(0);
+                setTab_selection(0);
                 break;
             case R.id.find:
-                setTabselection(1);
+                setTab_selection(1);
                 break;
             case R.id.message:
-                setTabselection(2);
+                setTab_selection(2);
                 break;
             case R.id.my:
-                setTabselection(3);
+                setTab_selection(3);
                 Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                 intent.putExtra("JUDGE",false);
                 startActivity(intent);
@@ -126,7 +123,7 @@ public class MainActivity extends Activity implements OnClickListener {
         }
     }
 
-    private void setTabselection(int index) {
+    private void setTab_selection(int index) {
         //每次选中前先清除掉上次选中的状态
         clearSelection();
         //开启一个Fragment事物
@@ -179,4 +176,11 @@ public class MainActivity extends Activity implements OnClickListener {
         transaction.commit();
     }
 
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        App.dbWrite.close();
+        App.dbRead.close();
+    }
 }

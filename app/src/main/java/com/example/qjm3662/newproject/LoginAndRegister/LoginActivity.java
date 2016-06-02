@@ -17,10 +17,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.qjm3662.newproject.Data.Final_Static_data;
-import com.example.qjm3662.newproject.MainActivity;
+import com.example.qjm3662.newproject.Main_UI.MainActivity;
 import com.example.qjm3662.newproject.NetworkReceiver;
 import com.example.qjm3662.newproject.R;
-import com.example.qjm3662.newproject.Data.User;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -84,8 +83,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 case "MOBILE":case "mobile":
                     connect_flag = true;
                     break;
-                default:
-                    connect_flag = true;
             }
         }else{
             tv_forget_password.setText("没有检测到4G网络");

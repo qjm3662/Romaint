@@ -11,7 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.qjm3662.newproject.Data.Final_Static_data;
-import com.example.qjm3662.newproject.MainActivity;
+import com.example.qjm3662.newproject.Main_UI.MainActivity;
 import com.example.qjm3662.newproject.R;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;

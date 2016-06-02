@@ -1,38 +1,29 @@
-package com.example.qjm3662.newproject;
+package com.example.qjm3662.newproject.Main_UI;
 
 import android.app.Fragment;
-import android.app.ListFragment;
-import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.support.annotation.StringDef;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.CursorAdapter;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
-import android.widget.Toast;
 
-import com.example.qjm3662.newproject.Data.Story;
-import com.example.qjm3662.newproject.Data.StoryDB;
+import com.example.qjm3662.newproject.App;
+import com.example.qjm3662.newproject.ListViewCompat;
+import com.example.qjm3662.newproject.R;
+import com.example.qjm3662.newproject.Slide.SlideAdapter;
+import com.example.qjm3662.newproject.StoryView.Edit_Acticity;
+import com.example.qjm3662.newproject.StoryView.Main2Activity;
 
 public class StoryFragment extends Fragment implements OnItemClickListener, View.OnClickListener {
 	
-	private static final String TAG = "StoryFragment";
 	private ListViewCompat mListView;
 	private View view;
-	public SlideAdapter slideAdapter;
+	public static SlideAdapter slideAdapter;
 	private ImageView img_add;
-	private SimpleCursorAdapter adapter = null;
-	private SQLiteDatabase dbRead;
-	private StoryDB storyDB;
-	public static final int REQUEST_CODE_READ = 2;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -45,7 +36,7 @@ public class StoryFragment extends Fragment implements OnItemClickListener, View
 		return view;
 	}
 	
-	private void initView() { 
+	private void initView() {
 		mListView = (ListViewCompat) view.findViewById(android.R.id.list);
 		slideAdapter = new SlideAdapter(getActivity());
 		mListView.setAdapter(slideAdapter);
@@ -55,36 +46,26 @@ public class StoryFragment extends Fragment implements OnItemClickListener, View
 		refreshStoryListView();
 	}
 
-//	@Override
-//	public void onListItemClick(ListView l, View v, int position, long id) {
-//		super.onListItemClick(l, v, position, id);
-//		Cursor c = adapter.getCursor();
-//		c.moveToPosition(position);
-//		System.out.println(c.getString(c.getColumnIndex(StoryDB.COLUMN_NAME_TITLE)));
-//		Intent i = new Intent(view.getContext(),Edit_Acticity.class);
-//		i.putExtra(Edit_Acticity.EDIT_TITLE, c.getString(c.getColumnIndex(StoryDB.COLUMN_NAME_TITLE)));
-//		i.putExtra(Edit_Acticity.EDIT_CONTENT,c.getString(c.getColumnIndex(StoryDB.COLUMN_NAME_CONTENT)));
-//		System.out.println(c.getString(c.getColumnIndex(StoryDB.COLUMN_NAME_TITLE)));
-//		i.putExtra("JUDGE",true);
-//		i.putExtra("ID",c.getInt(c.getColumnIndex(StoryDB.COLUMN_NAME_ID)));
-//		this.startActivityForResult(i,2);
-//	}
-
-	public void refreshStoryListView() {
+	public static void refreshStoryListView() {
 		//更新数据（查询出所有的数据）
 		slideAdapter.notifyDataSetChanged();
 	}
+
+
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
-		 Toast.makeText(getActivity(), ""+position, Toast.LENGTH_SHORT).show();
-		Intent i = new Intent(view.getContext(),Edit_Acticity.class);
+		//Toast.makeText(getActivity(), ""+position, Toast.LENGTH_SHORT).show();
+
+		//打开编辑界面，查看故事
+		Intent i = new Intent(view.getContext(),Main2Activity.class);
 		i.putExtra(Edit_Acticity.EDIT_TITLE, App.StoryList.get(position).getTitle());
-		i.putExtra(Edit_Acticity.EDIT_CONTENT,App.StoryList.get(position).getContent());
+		i.putExtra(Edit_Acticity.EDIT_CONTENT, App.StoryList.get(position).getContent());
+		//加一个标记，true表示是已有的故事查看
 		i.putExtra("JUDGE",true);
 		i.putExtra("ID",App.StoryList.get(position).getLocal_id());
 		i.putExtra("position",position);
-		this.startActivityForResult(i,5);
+		this.startActivity(i);
 	}
 
 	@Override

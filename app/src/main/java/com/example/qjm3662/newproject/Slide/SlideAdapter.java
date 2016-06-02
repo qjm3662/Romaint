@@ -1,7 +1,6 @@
-package com.example.qjm3662.newproject;
+package com.example.qjm3662.newproject.Slide;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -9,10 +8,10 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.example.qjm3662.newproject.App;
 import com.example.qjm3662.newproject.Data.Story;
 import com.example.qjm3662.newproject.Data.StoryDB;
-import com.example.qjm3662.newproject.model.MessageItem;
-import com.example.qjm3662.newproject.model.MessageItemList;
+import com.example.qjm3662.newproject.R;
 
 
 public class SlideAdapter extends BaseAdapter implements SlideView.OnSlideListener {
@@ -22,7 +21,7 @@ public class SlideAdapter extends BaseAdapter implements SlideView.OnSlideListen
 	private SlideView mLastSlideViewWithStatusOn;
 	private Context context;
 
-	SlideAdapter(Context context) {
+	public SlideAdapter(Context context) {
 		super();
 		this.context = context;
 		mInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -95,8 +94,8 @@ public class SlideAdapter extends BaseAdapter implements SlideView.OnSlideListen
 			@Override
 			public void onClick(View v) {
 				//Log.e(TAG,"position"+position);
+				App.dbWrite.delete(StoryDB.TABLE_NAME_STORY,StoryDB.COLUMN_NAME_ID+"=?",new String[]{String.valueOf(App.StoryList.get(position).getLocal_id())});
 				App.StoryList.remove(position);
-				//App.dbWrite.delete(StoryDB.TABLE_NAME_STORY,)
 				notifyDataSetChanged();
 			}
 		});

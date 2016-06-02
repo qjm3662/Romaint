@@ -1,11 +1,11 @@
 package com.example.qjm3662.newproject.Data;
 
-import com.example.qjm3662.newproject.SlideView;
+import com.example.qjm3662.newproject.Slide.SlideView;
 
 import java.util.Calendar;
-import java.util.Date;
 
 /**
+ * 故事类
  * Created by qjm3662 on 2016/5/29 0029.
  */
 public class Story {

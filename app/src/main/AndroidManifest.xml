@@ -8,6 +8,11 @@
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
 
+    <uses-permission android:name="android.permission.MANAGE_DOCUMENTS" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:name=".App"
         android:allowBackup="true"
@@ -19,7 +24,7 @@
 
         </activity>
         <activity android:name=".LoginAndRegister.Register_UI" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".Main_UI.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -33,7 +38,12 @@
         <!-- <action android:name="android.net.wifi.STATE_CHANGE" /> -->
         <!-- </intent-filter> -->
         <!-- </receiver> -->
-        <activity android:name=".Edit_Acticity"></activity>
+        <activity android:name=".StoryView.Edit_Acticity">
+
+        </activity>
+        <activity android:name=".StoryView.Main2Activity">
+
+        </activity>
     </application>
 
 </manifest>
