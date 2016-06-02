@@ -30,7 +30,11 @@ import com.example.qjm3662.newproject.Tool.Tool;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.TimeZone;
 
 public class Edit_Acticity extends Activity implements View.OnClickListener {
 
@@ -59,6 +63,7 @@ public class Edit_Acticity extends Activity implements View.OnClickListener {
     private String title;
     private Editable edit_text;
     public boolean judge = true;
+    private Date date = null;
 
 
     @Override
@@ -89,11 +94,12 @@ public class Edit_Acticity extends Activity implements View.OnClickListener {
             System.out.println("null");
         }
 
-        if(intent.getBooleanExtra(Main2Activity.COMU_CODE_READ,false)){
+        if (intent.getBooleanExtra(Main2Activity.COMU_CODE_READ, false)) {
             display();
             save_story();
             judge = false;
         }
+
     }
 
 
@@ -235,8 +241,12 @@ public class Edit_Acticity extends Activity implements View.OnClickListener {
         }
     }
 
+    /**
+     * 根据URI插入图片
+     * @param bitmap
+     * @param uri
+     */
 
-    //根据URI插入图片
     private void insertPic(Bitmap bitmap, Uri uri) {
 
         // 根据Bitmap对象创建ImageSpan对象
@@ -319,9 +329,13 @@ public class Edit_Acticity extends Activity implements View.OnClickListener {
      */
     private void save_story(){
         ContentValues cv = new ContentValues();
+        //获取当前时间
+        date = getDate();
+        System.out.println("Date : ======>" + date);
         cv.put(StoryDB.COLUMN_NAME_TITLE,et_title.getText().toString());
         cv.put(StoryDB.COLUMN_NAME_CONTENT, et_input.getText().toString());
         cv.put(StoryDB.COLUMN_NAME_PUBLIC_ENABLE,a == 0);
+        cv.put(StoryDB.COLUMN_NAME_CREATE_AT, String.valueOf(date));
         Story story;
         System.out.println(JUDGE + String.valueOf(getIntent().getIntExtra("ID", 1)+""));
         if (JUDGE){
@@ -330,6 +344,7 @@ public class Edit_Acticity extends Activity implements View.OnClickListener {
             story = App.StoryList.get(getIntent().getIntExtra("position",-1));
             story.setTitle(et_title.getText().toString());
             story.setContent(et_input.getText().toString());
+            story.setCreatedAt(String.valueOf(date));
             System.out.println(getIntent().getIntExtra("position",-1));
             App.StoryList.set(getIntent().getIntExtra("position",-1),story);
             System.out.println("update success");
@@ -337,10 +352,15 @@ public class Edit_Acticity extends Activity implements View.OnClickListener {
             story = new Story();
             story.setTitle(et_title.getText().toString());
             story.setContent(et_input.getText().toString());
+            story.setCreatedAt(String.valueOf(date));
             App.dbWrite.insert(StoryDB.TABLE_NAME_STORY, null, cv);
             App.StoryList.add(story);
             System.out.println("create success");
         }
 
+    }
+
+    public Date getDate() {
+        return new Date(System.currentTimeMillis());
     }
 }
