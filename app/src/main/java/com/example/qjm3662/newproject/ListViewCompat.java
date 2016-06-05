@@ -12,7 +12,7 @@ import com.example.qjm3662.newproject.Slide.SlideView;
 
 
 public class ListViewCompat extends ListView {
-	
+	//是厉害啊！！！！！
 	private static final String TAG = "ListViewCompat";
 	
 	private SlideView mFocusedItenView;
