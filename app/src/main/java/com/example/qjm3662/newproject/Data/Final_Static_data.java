@@ -19,9 +19,9 @@ public class Final_Static_data {
     public static final String URL_REGISTER = NET_HOST + ":" + NET_PORT + "/api/register";
     public static final String URL_GET_TOKEN = NET_HOST + ":" + NET_PORT + "/api/getToken";
     public static final String URL_GET_DEBUG_LOGIN = NET_HOST + ":" + NET_PORT + "/api/debugLogin";
-    public static final String URL_GET_USERINFO = NET_HOST + ":" + NET_PORT + "/api/debugLogin";
-
-
+    public static final String URL_GET_USER_INFO = NET_HOST + ":" + NET_PORT + "/api/token/userinfo";
+    public static final String URL_GET_USER_INFO_UPDATE = NET_HOST + ":" + NET_PORT + "/api/token/userinfo/update";
+    public static final String URL_ADD_STORY = NET_HOST + ":" + NET_PORT + "/api/token/addstory";
 
 //    Calendar.YEAR;      //——年份
 //

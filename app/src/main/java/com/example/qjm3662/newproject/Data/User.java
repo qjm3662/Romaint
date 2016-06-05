@@ -6,7 +6,7 @@ package com.example.qjm3662.newproject.Data;
 public class User {
     private int id;
     private String mobile;
-    private String avatar;
+    private String avatar = "111";
     private String sign;                    //签名
     private String username;
     private String token;
@@ -16,6 +16,22 @@ public class User {
     private boolean followingEnable;        //我正在关注的是否公开
     private boolean followerEnable;         //关注我的是否公开
     private int collectedStoriesCount;      //收藏的故事数目
+
+
+    public static final String USER_ID = "userID";
+    public static final String USER_TOKEN = "token";
+    public static final String USER_MOBILE = "mobile";
+    public static final String USER_AVATAR = "avatar";
+    public static final String USER_SIGN = "sign";
+    public static final String USER_SEX = "sex";
+
+    public static final String USER_USER_NAME = "userName";
+    public static final String USER_LOGIN_TOKEN = "LoginToken";
+    public static final String USER_NOTICE_ABLE = "noticeEnable";
+    public static final String USER_FOLLOWINGENABLE = "followingEnable";
+    public static final String USER_FOLLOWERENABLE = "followerEnable";
+    public static final String USER_COLLECTED_STORIES_COUNT = "collectedStoriesCount";
+
 
     private static User instance = null;
 

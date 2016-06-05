@@ -15,6 +15,7 @@ import com.example.qjm3662.newproject.Finding.Finding;
 import com.example.qjm3662.newproject.LoginAndRegister.LoginActivity;
 import com.example.qjm3662.newproject.R;
 import com.example.qjm3662.newproject.StoryView.Edit_Acticity;
+import com.example.qjm3662.newproject.myself.Myself;
 
 
 public class MainActivity extends Activity implements OnClickListener {
@@ -26,7 +27,7 @@ public class MainActivity extends Activity implements OnClickListener {
     private StoryFragment storyFragment;
     private Finding findFragment;
     private MessageFragment messageFragment;
-    private MyFragment myFragment;
+    private Myself myFragment;
     private FragmentManager fragmentManager;
 
     @Override
@@ -64,13 +65,20 @@ public class MainActivity extends Activity implements OnClickListener {
                 break;
             case R.id.message:
                 setTab_selection(2);
-                break;
-            case R.id.my:
-                setTab_selection(3);
+                //启动登陆界面
                 Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                 intent.putExtra("JUDGE",false);
                 startActivity(intent);
                 overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+                break;
+            case R.id.my:
+                setTab_selection(3);
+
+                //启动登陆界面
+//                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+//                intent.putExtra("JUDGE",false);
+//                startActivity(intent);
+//                overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
                 break;
         }
     }
@@ -165,7 +173,7 @@ public class MainActivity extends Activity implements OnClickListener {
             case 3:
                 my.setImageResource(R.drawable.img_my_choose);
                 if (myFragment == null) {
-                    myFragment = new MyFragment();
+                    myFragment = new Myself();
                     transaction.add(R.id.framelayout, myFragment);
                 } else {
                     transaction.show(myFragment);
@@ -183,4 +191,6 @@ public class MainActivity extends Activity implements OnClickListener {
         App.dbWrite.close();
         App.dbRead.close();
     }
+
+
 }

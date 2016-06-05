@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.example.qjm3662.newproject.Data.Final_Static_data;
 import com.example.qjm3662.newproject.Main_UI.MainActivity;
+import com.example.qjm3662.newproject.NetWorkOperator;
 import com.example.qjm3662.newproject.NetworkReceiver;
 import com.example.qjm3662.newproject.R;
 import com.zhy.http.okhttp.OkHttpUtils;
@@ -101,56 +102,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 finish();
                 break;
             case R.id.login_btn:
-                Login();
+                SetConect_flag();
+                NetWorkOperator.Login(et_username,et_password,connect_flag,context);
                 break;
             case R.id.forget_password:
                 break;
-        }
-    }
-    public void Login(){
-        SetConect_flag();
-        System.out.println(connect_flag);
-        if(et_username.getText().toString().equals("")){
-            Toast.makeText(context, "用户名不能为空", Toast.LENGTH_SHORT).show();
-        }else if(et_password.getText().toString().equals("")){
-            Toast.makeText(context, "密码不能为空", Toast.LENGTH_SHORT).show();
-        }else {
-            if(!connect_flag){
-                Toast.makeText(context, "请检查网络连接", Toast.LENGTH_SHORT).show();
-            }else{
-                OkHttpUtils
-                        .post()
-                        .url(Final_Static_data.URL_LOGIN)
-                        .addParams("mobile", et_username.getText().toString())
-                        .addParams("password", et_password.getText().toString())
-                        .build()
-                        .execute(new StringCallback() {
-                            @Override
-                            public void onError(Call call, Exception e) {
-                                LoginAndRegisterOperator.Login_error_tip(context,"账号或密码错误！",et_password);
-                            }
-
-                            @Override
-                            public void onResponse(String response) {
-                                System.out.println(response + "啦啦啦");
-                                try {
-                                    JSONObject jsonObject = new JSONObject(response);
-                                    JSONObject jsonObject1 = jsonObject.getJSONObject("msg");
-
-                                    if (jsonObject.getBoolean("status")) {
-                                        Toast.makeText(context, "登陆成功", Toast.LENGTH_SHORT).show();
-                                        startActivity(new Intent(context, MainActivity.class));
-                                        overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
-                                        finish();
-                                    }
-
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                    LoginAndRegisterOperator.Login_error_tip(context,"账号或密码错误！",et_password);
-                                }
-                            }
-                        });
-            }
         }
     }
 }

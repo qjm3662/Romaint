@@ -107,6 +107,7 @@ public class Edit_Acticity extends Activity implements View.OnClickListener {
      * 显示函数，将list、index_list和content组合显示出图文混排
      */
     public void display() {
+        System.out.println("Display== " + list.toString());
         for (int i = 0; i < index_int.size(); i++) {
             if ((i + 1) % 2 == 0) {
                 path = list.get((i + 1) / 2 - 1);
@@ -309,6 +310,9 @@ public class Edit_Acticity extends Activity implements View.OnClickListener {
             //将包含的路径放到list中
             list.add(content.substring(index_pre + 4,index_next-1));
         }
+
+        System.out.println("getImg_Src== " + list.toString());
+
     }
 
 

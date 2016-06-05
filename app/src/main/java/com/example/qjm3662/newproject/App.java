@@ -1,11 +1,18 @@
 package com.example.qjm3662.newproject;
 
 import android.app.Application;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.qjm3662.newproject.Data.Story;
 import com.example.qjm3662.newproject.Data.StoryDB;
+import com.example.qjm3662.newproject.Data.User;
+import com.example.qjm3662.newproject.Tool.Tool;
+import com.facebook.drawee.backends.pipeline.Fresco;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.sql.Date;
 import java.text.ParseException;
@@ -32,15 +39,29 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Fresco.initialize(this);
 
         //获取数据库
         storyDB = new StoryDB(this);
         dbRead = storyDB.getReadableDatabase();
         dbWrite = storyDB.getWritableDatabase();
 
+        //获取用户信息
+        getUserInfo();
+
         App.format.setTimeZone(TimeZone.getTimeZone("GMT+08:00"));// 中国北京时间，东八区
 
         getStory_from_SQLite();
+    }
+
+    private void getUserInfo() {
+        //用户详细信息
+        SharedPreferences sp = this.getSharedPreferences("User",MODE_PRIVATE);
+        //登陆返回信息
+        SharedPreferences sp1 = this.getSharedPreferences("User_", MODE_PRIVATE);
+        if(sp != null){
+            Tool.str_to_user(sp.getString("user_info",null),sp1.getString("user_info",null));
+        }
     }
 
 

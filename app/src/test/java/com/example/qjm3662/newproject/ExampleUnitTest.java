@@ -1,5 +1,6 @@
 package com.example.qjm3662.newproject;
 
+import org.junit.AfterClass;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -12,4 +13,11 @@ public class ExampleUnitTest {
     public void addition_isCorrect() throws Exception {
         assertEquals(4, 2 + 2);
     }
+    @Test
+    public void TestString(){
+        String a = "a";
+        String b = "a";
+        assertEquals(a,b);
+    }
+
 }

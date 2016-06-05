@@ -44,6 +44,17 @@
         <activity android:name=".StoryView.Main2Activity">
 
         </activity>
+
+
+        <activity android:name=".myself.MyselfMyAttention">
+
+        </activity>
+        <activity android:name=".myself.MyselfMyCollection">
+
+        </activity>
+        <activity android:name=".myself.MyselfMynameSet">
+
+        </activity>
     </application>
 
 </manifest>

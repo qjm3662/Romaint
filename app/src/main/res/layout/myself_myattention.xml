@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/test_picture">
+    <RelativeLayout
+        android:id="@+id/myattention_titlelayout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/green">
+        <TextView 
+            android:id="@+id/myattention_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="返回"
+            android:textColor="#ffffff"
+            android:textSize="20sp"
+            android:layout_centerVertical="true"
+            android:paddingLeft="10dp"/>
+        <TextView 
+            android:text="关注的人"
+            android:textSize="26.5sp"
+            android:textColor="#ffffff"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"/>
+        
+    </RelativeLayout>
+    <EditText 
+        android:id="@+id/myattention_finding_edittext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/myattention_titlelayout"
+        android:hint="查找"/>
+    <ListView
+
+        android:id="@+id/myattention_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/myattention_finding_edittext">
+        
+    </ListView>
+
+</RelativeLayout>
