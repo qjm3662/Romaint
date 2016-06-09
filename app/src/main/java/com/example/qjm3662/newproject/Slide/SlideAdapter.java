@@ -87,7 +87,7 @@ public class SlideAdapter extends BaseAdapter implements SlideView.OnSlideListen
 
 		holder.tv_title.setText(item.getTitle());
 		holder.tv_content.setText(item.getContent());
-		holder.tv_time.setText(item.getCreatedAt());
+		holder.tv_time.setText(item.getCreatedAt() + "");
 		System.out.println("Item Date : ======>" + item.getCreatedAt());
 
 		//为什么不会产生 线程问题？ 为什么可以在getView中对tv_delete操作？
@@ -126,7 +126,7 @@ public class SlideAdapter extends BaseAdapter implements SlideView.OnSlideListen
 			tv_title = (TextView)view.findViewById(R.id.finding_listView_title);
 			tv_content = (TextView) view.findViewById(R.id.finding_listView_introduce);
 			tv_delete = (TextView)view.findViewById(R.id.delete_slide);
-			tv_time = (TextView) view.findViewById(R.id.finding_listview_time);
+			tv_time = (TextView) view.findViewById(R.id.finding_listView_time);
 		}
 	}
 

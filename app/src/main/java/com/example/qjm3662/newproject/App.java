@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.qjm3662.newproject.Data.Story;
+import com.example.qjm3662.newproject.Data.StoryBean;
 import com.example.qjm3662.newproject.Data.StoryDB;
 import com.example.qjm3662.newproject.Data.User;
 import com.example.qjm3662.newproject.Tool.Tool;
@@ -34,7 +35,11 @@ public class App extends Application {
     //存储本地故事对象列表
     public static List<Story> StoryList = new ArrayList<Story>();
 
-    public static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    public static SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
+
+
+    //广场故事列表
+    public static List<StoryBean> Public_StoryList = new ArrayList<StoryBean>();
 
     @Override
     public void onCreate() {
@@ -49,7 +54,7 @@ public class App extends Application {
         //获取用户信息
         getUserInfo();
 
-        App.format.setTimeZone(TimeZone.getTimeZone("GMT+08:00"));// 中国北京时间，东八区
+        App.format.setTimeZone(TimeZone.getTimeZone("GMT+08:00:00"));// 中国北京时间，东八区
 
         getStory_from_SQLite();
     }

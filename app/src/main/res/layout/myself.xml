@@ -135,4 +135,38 @@
         
     </LinearLayout>
 
+	<LinearLayout
+		android:id="@+id/myself_Change_user"
+		android:layout_below="@id/myself_linearlayout2"
+		android:layout_marginTop="10dp"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		>
+		<RelativeLayout
+			android:id="@+id/myself_setting_layout_2"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:paddingTop="10dp"
+			android:paddingBottom="10dp"
+			android:background="#ffffff">
+			<ImageView
+				android:id="@+id/myself_setting_layout_img_"
+				android:layout_width="25dp"
+				android:layout_height="25dp"
+				android:src="@drawable/img_my"
+				android:layout_marginLeft="20dp"
+				android:layout_centerVertical="true"/>
+			<TextView
+				android:id="@+id/myself_Change_User"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:textColor="@color/dark_normal"
+				android:text="更改账号"
+				android:textSize="17sp"
+				android:layout_centerInParent="true"
+				/>
+		</RelativeLayout>
+
+	</LinearLayout>
+
 </RelativeLayout>

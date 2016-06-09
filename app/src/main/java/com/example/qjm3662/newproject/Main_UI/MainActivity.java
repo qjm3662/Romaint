@@ -9,13 +9,35 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.qjm3662.newproject.App;
+import com.example.qjm3662.newproject.Data.Final_Static_data;
+import com.example.qjm3662.newproject.Data.Story;
+import com.example.qjm3662.newproject.Data.StoryBean;
+import com.example.qjm3662.newproject.Data.User;
 import com.example.qjm3662.newproject.Finding.Finding;
 import com.example.qjm3662.newproject.LoginAndRegister.LoginActivity;
+import com.example.qjm3662.newproject.NetWorkOperator;
 import com.example.qjm3662.newproject.R;
 import com.example.qjm3662.newproject.StoryView.Edit_Acticity;
+import com.example.qjm3662.newproject.StoryView.Main2Activity;
 import com.example.qjm3662.newproject.myself.Myself;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.reflect.TypeToken;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.StringCallback;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
+
+import okhttp3.Call;
 
 
 public class MainActivity extends Activity implements OnClickListener {
@@ -62,14 +84,17 @@ public class MainActivity extends Activity implements OnClickListener {
                 break;
             case R.id.find:
                 setTab_selection(1);
+                System.out.println("MainActivity : " + User.getInstance().getLoginToken());
+                if(User.getInstance().getLoginToken() != null){
+                    NetWorkOperator.Get_finding_story();
+                }
+                else{
+                    Toast.makeText(MainActivity.this, "请先登录", Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.message:
                 setTab_selection(2);
-                //启动登陆界面
-                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                intent.putExtra("JUDGE",false);
-                startActivity(intent);
-                overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+
                 break;
             case R.id.my:
                 setTab_selection(3);

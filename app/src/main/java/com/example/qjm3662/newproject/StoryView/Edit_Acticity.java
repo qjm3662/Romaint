@@ -17,6 +17,7 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextClock;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -62,8 +63,10 @@ public class Edit_Acticity extends Activity implements View.OnClickListener {
     private String content;
     private String title;
     private Editable edit_text;
+
     public boolean judge = true;
     private Date date = null;
+    private LinearLayout bar;
 
 
     @Override

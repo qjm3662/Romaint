@@ -19,7 +19,7 @@
             android:textColor="@color/dark_deep"
             android:text="有一个很长的故事叫山里的故事"/>
         <TextView
-            android:id="@+id/finding_listview_tip"
+            android:id="@+id/finding_listView_flags"
             android:layout_width="wrap_content"
             android:layout_height="19dp"
             android:background="@drawable/rectangle_tip"
@@ -28,7 +28,7 @@
             android:text="标签"
             android:textColor="@color/green"/>
         <TextView 
-            android:id="@+id/finding_listview_time"
+            android:id="@+id/finding_listView_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="14dp"
@@ -39,7 +39,7 @@
             android:textColor="@color/dark_normal"
             android:text="14:14"/>
         <ImageView
-            android:id="@+id/finding_listview_icon_my"
+            android:id="@+id/finding_listView_icon_my"
             android:layout_width="14dp"
             android:layout_height="14dp"
             android:layout_marginLeft="14dp"
@@ -47,12 +47,12 @@
             android:src="@drawable/img_my"
             android:layout_below="@id/finding_listView_title"/>
         <TextView
-            android:id="@+id/finding_listview_nickname"
+            android:id="@+id/finding_listView_nickname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="14sp"
             android:text="昵称"
-            android:layout_toRightOf="@+id/finding_listview_icon_my"
+            android:layout_toRightOf="@+id/finding_listView_icon_my"
             android:layout_below="@+id/finding_listView_title"
             android:layout_marginLeft="14dp"
             android:layout_marginTop="14dp"
@@ -64,7 +64,7 @@
             android:textSize="14sp"
             android:layout_marginTop="14dp"
             android:layout_marginLeft="14dp"
-            android:layout_toRightOf="@+id/finding_listview_nickname"
+            android:layout_toRightOf="@+id/finding_listView_nickname"
             android:layout_below="@+id/finding_listView_title"
             android:text="快让自己的签名变得长一点吧......"/>
         <RelativeLayout 
@@ -76,7 +76,7 @@
             android:background="@drawable/rectangle_cnt"
             >
         <TextView
-            android:id="@+id/finding_listview_cnt"
+            android:id="@+id/finding_listView_likeCount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/green"
@@ -91,7 +91,7 @@
             android:textColor="@color/dark_normal"
             android:lineSpacingExtra="7dp"
             android:text="从前有座山，山里有座庙，庙里有个老和尚和一个小和尚。老和尚再跟小和尚讲故事：从前有座山，山里有......"
-            android:layout_below="@id/finding_listview_icon_my"
+            android:layout_below="@id/finding_listView_icon_my"
             android:layout_marginBottom="14dp"
             android:layout_marginTop="14dp"
             android:layout_marginLeft="14dp"/>

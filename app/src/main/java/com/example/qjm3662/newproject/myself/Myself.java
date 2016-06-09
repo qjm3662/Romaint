@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.example.qjm3662.newproject.Data.Final_Static_data;
 import com.example.qjm3662.newproject.Data.User;
+import com.example.qjm3662.newproject.LoginAndRegister.LoginActivity;
 import com.example.qjm3662.newproject.NetWorkOperator;
 import com.example.qjm3662.newproject.R;
 import com.zhy.http.okhttp.OkHttpUtils;
@@ -39,11 +40,12 @@ public class Myself extends Fragment {
 	private TextView tv_name;
 	private TextView tv_sign;
 	private User_info_receiver get_info_receiver;
+	private ViewGroup myChange;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.myself, container,false);
+		final View view = inflater.inflate(R.layout.myself, container,false);
 		context = view.getContext();
 
 		get_info_receiver = new User_info_receiver();
@@ -59,6 +61,7 @@ public class Myself extends Fragment {
 		myCollection = (ViewGroup) view.findViewById(R.id.myself_myCollection_layout_);
 		tv_name = (TextView) view.findViewById(R.id.myself_myName_layout_nickname);
 		tv_sign = (TextView) view.findViewById(R.id.myself_myName_layout_gexingqianming);
+		myChange = (ViewGroup) view.findViewById(R.id.myself_Change_user);
 
 		img_avater = (FrescoImageView) view.findViewById(R.id.myself_myName_layout_img);
 
@@ -66,6 +69,16 @@ public class Myself extends Fragment {
 		tv_name.setText(User.getInstance().getUsername());
 		tv_sign.setText(User.getInstance().getSign());
 
+
+		myChange.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				//启动登陆界面
+				Intent intent = new Intent(view.getContext(), LoginActivity.class);
+				intent.putExtra("JUDGE",false);
+				startActivity(intent);
+			}
+		});
 
 		mySetting.setOnClickListener(new OnClickListener() {
 			@Override

@@ -6,16 +6,22 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Message;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.qjm3662.newproject.Data.Final_Static_data;
+import com.example.qjm3662.newproject.Data.Story;
+import com.example.qjm3662.newproject.Data.StoryBean;
 import com.example.qjm3662.newproject.Data.User;
+import com.example.qjm3662.newproject.Finding.Finding;
 import com.example.qjm3662.newproject.LoginAndRegister.LoginAndRegisterOperator;
 import com.example.qjm3662.newproject.Main_UI.MainActivity;
+import com.google.gson.Gson;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -26,6 +32,134 @@ import okhttp3.Call;
  */
 public class NetWorkOperator {
 
+
+    /**
+     * 获得广场故事
+     */
+    public static void Get_finding_story(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                OkHttpUtils
+                        .post()
+                        .url(Final_Static_data.URL_GET_PUBLIC_STORIES)
+                        .addHeader("LoginToken", User.getInstance().getLoginToken())
+                        .addParams("timestamps", String.valueOf(System.currentTimeMillis()))
+                        .build()
+                        .execute(new StringCallback() {
+                            @Override
+                            public void onError(Call call, Exception e) {
+                                System.out.println("error");
+                            }
+
+                            @Override
+                            public void onResponse(String response) {
+                                //System.out.println("RESPONSE  : " + response);
+                                try {
+                                    JSONObject object = new JSONObject(response);
+                                    Gson gson = new Gson();
+                                    JSONArray jsonObject = object.getJSONArray("msg");
+                                    System.out.println(jsonObject.toString());
+                                    App.Public_StoryList.clear();
+                                    for(int i = 0; i < jsonObject.length(); i++){
+                                        StoryBean story = gson.fromJson(jsonObject.get(i).toString(),StoryBean.class);
+                                        System.out.println(story.getUpdatedAt());
+                                        System.out.println(story.getTitle() + "\n" + story.getContent());
+                                        if(!App.Public_StoryList.contains(story)){
+                                            App.Public_StoryList.add(story);
+                                        }
+                                    }
+                                    Finding.adapter.notifyDataSetChanged();
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+            }
+        }).start();
+    }
+
+
+    /**
+     * 上传故事
+     * @param context
+     * @param story
+     */
+    public static  void UpLoad_story(final Context context, final Story story){
+        new Thread(new Runnable() {
+            @Override
+            public void run () {
+//                System.out.println("Story : " + story.getTitle());
+//                System.out.println(User.getInstance().getLoginToken());
+                OkHttpUtils
+                        .post()
+                        .url(Final_Static_data.URL_ADD_STORY)
+                        .addHeader("LoginToken", User.getInstance().getLoginToken())
+                        .addParams("title", story.getTitle())
+                        .addParams("flags", "故事")
+                        .addParams("content", story.getContent())
+                        .addParams("publicEnable", "1")
+                        .build()
+                        .execute(new StringCallback() {
+                            @Override
+                            public void onError(Call call, Exception e) {
+                                if(User.getInstance().getLoginToken() == null){
+                                    Toast.makeText(context, "请先登录", Toast.LENGTH_SHORT).show();
+                                }else{
+                                    Toast.makeText(context, "上传失败", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+
+                            @Override
+                            public void onResponse(String response) {
+                                try {
+                                    JSONObject jsonObject = new JSONObject(response);
+                                    if(jsonObject.getString("msg").equals("LoginToken")){
+                                        getNew_Token(User.getInstance().getToken());
+                                        UpLoad_story(context,story);
+                                    }else{
+                                        Toast.makeText(context, "上传成功", Toast.LENGTH_SHORT).show();
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+            }
+        }).start();
+    }
+
+
+    /**
+     * 失效后获取新Token
+     * @param token
+     */
+    public static void getNew_Token(String token){
+        OkHttpUtils
+                .post()
+                .url(Final_Static_data.URL_GET_TOKEN)
+                .addParams("token",User.getInstance().getToken())
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e) {
+
+                    }
+
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            JSONObject jsonObject1 = jsonObject.getJSONObject("msg");
+                            if(jsonObject1.getString("token").equals(User.getInstance().getToken())){
+                                User.getInstance().setLoginToken(jsonObject1.getString("LoginToken"));
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+    }
 
 
     /**

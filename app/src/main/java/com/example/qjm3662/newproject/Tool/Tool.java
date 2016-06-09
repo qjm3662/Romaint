@@ -41,8 +41,8 @@ public class Tool {
                 user.setSign(user_info.getString(User.USER_SIGN));
                 user.setUsername(user_info.getString(User.USER_USER_NAME));
                 user.setSex(user_info.getInt(User.USER_SEX));
-                user.setCollectedStoriesCount(jsonObject.getInt(User.USER_COLLECTED_STORIES_COUNT));
-                System.out.println(user.getCollectedStoriesCount());
+//                user.setCollectedStoriesCount(jsonObject.getInt(User.USER_COLLECTED_STORIES_COUNT));
+//                System.out.println(user.getCollectedStoriesCount());
             } catch (JSONException e) {
                 e.printStackTrace();
             }
