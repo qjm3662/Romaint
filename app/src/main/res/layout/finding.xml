@@ -1,5 +1,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+	android:background="@drawable/test_picture"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 	android:orientation="vertical">
@@ -12,10 +13,18 @@
 		<TextView
 			android:layout_centerHorizontal="true"
 			android:id="@+id/bar_tv"
-			android:textSize="24sp"
+			android:textSize="26.5sp"
 			android:paddingTop="15dp"
 			android:text="发现"
 			android:textColor="#ffffff"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content" />
+		<TextView
+			android:id="@+id/finding_flush"
+			android:text="刷新"
+			android:textSize="24dp"
+			android:layout_alignParentRight="true"
+
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content" />
 	</RelativeLayout>

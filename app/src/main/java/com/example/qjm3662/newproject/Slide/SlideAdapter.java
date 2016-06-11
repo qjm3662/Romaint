@@ -16,7 +16,6 @@ import com.example.qjm3662.newproject.R;
 
 public class SlideAdapter extends BaseAdapter implements SlideView.OnSlideListener {
 
-	private static final String TAG = "SlideAdapter";
 	private LayoutInflater mInflater;
 	private SlideView mLastSlideViewWithStatusOn;
 	private Context context;
@@ -88,6 +87,9 @@ public class SlideAdapter extends BaseAdapter implements SlideView.OnSlideListen
 
 		holder.tv_title.setText(item.getTitle());
 		holder.tv_content.setText(item.getContent());
+		holder.tv_time.setText(item.getCreatedAt() + "");
+		System.out.println("Item Date : ======>" + item.getCreatedAt());
+
 		//为什么不会产生 线程问题？ 为什么可以在getView中对tv_delete操作？
 		holder.tv_delete.setOnClickListener(new OnClickListener() {
 
@@ -118,11 +120,13 @@ public class SlideAdapter extends BaseAdapter implements SlideView.OnSlideListen
 		public TextView tv_title;
 		public TextView tv_content;
 		public TextView tv_delete;
+		public TextView tv_time;
 
 		ViewHolder(View view) {
 			tv_title = (TextView)view.findViewById(R.id.finding_listView_title);
 			tv_content = (TextView) view.findViewById(R.id.finding_listView_introduce);
 			tv_delete = (TextView)view.findViewById(R.id.delete_slide);
+			tv_time = (TextView) view.findViewById(R.id.finding_listView_time);
 		}
 	}
 

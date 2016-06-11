@@ -7,7 +7,7 @@
     tools:context=".StoryView.Edit_Acticity">
 
     <LinearLayout
-
+        android:id="@+id/Edit_title_bar"
         android:padding="5dp"
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"

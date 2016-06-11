@@ -18,6 +18,11 @@ import android.text.SpannableString;
 import android.text.style.ImageSpan;
 import android.widget.EditText;
 
+import com.example.qjm3662.newproject.Data.User;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 
@@ -25,6 +30,37 @@ import java.io.ByteArrayOutputStream;
  * Created by qjm3662 on 2016/5/31 0031.
  */
 public class Tool {
+    //JsonObject to User
+    public static void str_to_user(String s, String s2){
+        if(s != null){
+            try {
+                JSONObject jsonObject = new JSONObject(s);
+                JSONObject user_info = jsonObject.getJSONObject("user");
+                User user = User.getInstance();
+                user.setAvatar(user_info.getString(User.USER_AVATAR));
+                user.setSign(user_info.getString(User.USER_SIGN));
+                user.setUsername(user_info.getString(User.USER_USER_NAME));
+                user.setSex(user_info.getInt(User.USER_SEX));
+//                user.setCollectedStoriesCount(jsonObject.getInt(User.USER_COLLECTED_STORIES_COUNT));
+//                System.out.println(user.getCollectedStoriesCount());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }
+        if(s2 != null){
+            try {
+                System.out.println(s2);
+                JSONObject user_info = new JSONObject(s2);
+                User user = User.getInstance();
+                user.setId(user_info.getInt(User.USER_ID));
+                user.setLoginToken(user_info.getString(User.USER_LOGIN_TOKEN));
+                user.setToken(user_info.getString(User.USER_TOKEN));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
 
 

@@ -13,7 +13,7 @@
 		<TextView
 			android:layout_centerHorizontal="true"
 			android:id="@+id/bar_tv"
-			android:textSize="24sp"
+			android:textSize="26.5sp"
 			android:paddingTop="15dp"
 			android:text="信息"
 			android:textColor="#ffffff"

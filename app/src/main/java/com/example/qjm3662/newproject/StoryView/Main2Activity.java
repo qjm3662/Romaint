@@ -57,6 +57,11 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
         display();
     }
 
+
+
+    /**
+     * 显示内容
+     */
     public void display() {
         System.out.println("Content : "+content);
         for (int i = 0; i < index_int.size(); i++) {
@@ -98,6 +103,9 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
         edit_text.append(content.substring(start, end));
     }
 
+    /**
+     * 初始化操作
+     */
     private void init() {
         tv = (EditText) findViewById(R.id.textView);
         read_title = (TextView) findViewById(R.id.read_title);
@@ -121,6 +129,11 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
             getImg_Src(content);
             System.out.println("233");
             System.out.println(content);
+        }else{
+            content = intent.getStringExtra(Edit_Acticity.EDIT_CONTENT);
+            title = intent.getStringExtra(Edit_Acticity.EDIT_TITLE);
+            read_title.setText(title);
+            getImg_Src(content);
         }
 
         //获得EditText的编辑器
@@ -130,6 +143,11 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
         }
     }
 
+    /**
+     * 获取图片路径
+     * @param content
+     * @return
+     */
     public static List<String> getImg_Src(String content){
         list = new ArrayList<String>();
         int index_pre = content.indexOf("<img");
@@ -162,8 +180,10 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
     }
 
 
-
-
+    /**
+     * 获取屏幕宽度
+     * @return
+     */
     public int getWidth() {
         DisplayMetrics metric = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metric);
@@ -175,11 +195,14 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.read_title:
-                intent.putExtra(COMU_CODE_READ,true);
-                intent.setClass(Main2Activity.this, Edit_Acticity.class);
-                startActivity(intent);
-                finish();
-                overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+                //如果是本地的故事，则支持点击文章标题跳转到编辑界面
+                if(JUDGE){
+                    intent.putExtra(COMU_CODE_READ,true);
+                    intent.setClass(Main2Activity.this, Edit_Acticity.class);
+                    startActivity(intent);
+                    finish();
+                    overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+                }
                 break;
         }
     }

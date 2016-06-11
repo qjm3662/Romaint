@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.example.qjm3662.newproject.Data.Final_Static_data;
 import com.example.qjm3662.newproject.Main_UI.MainActivity;
+import com.example.qjm3662.newproject.NetWorkOperator;
 import com.example.qjm3662.newproject.R;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
@@ -45,53 +46,6 @@ public class Register_UI extends Activity implements View.OnClickListener {
         btn_register.setOnClickListener(this);
 
     }
-
-    public void register() {
-        if (et_phone_number.getText().toString().equals("")) {
-            Toast.makeText(Register_UI.this, "手机号不能为空", Toast.LENGTH_SHORT).show();
-        } else if (et_password.getText().toString().equals("")) {
-            Toast.makeText(Register_UI.this, "密码不能为空", Toast.LENGTH_SHORT).show();
-        } else {
-            OkHttpUtils
-                    .post()
-                    .url(Final_Static_data.URL_REGISTER)
-                    .addParams("mobile", et_phone_number.getText().toString())
-                    .addParams("password", et_password.getText().toString())
-                    .addParams("userName", "未命名")
-                    .addParams("avatar","http://cdnq.duitang.com/uploads/item/201410/08/20141008104934_vhuuX.jpeg")
-                    .build()
-                    .execute(new StringCallback() {
-                        @Override
-                        public void onError(Call call, Exception e) {
-                            System.out.println(e.toString());
-                            LoginAndRegisterOperator.Login_error_tip(Register_UI.this,"手机号不存在或已注册！",et_password);
-                        }
-
-                        @Override
-                        public void onResponse(String response) {
-                            System.out.println(response);
-                            JSONObject jsonObject = null;
-                            try {
-                                jsonObject = new JSONObject(response);
-                                System.out.println(jsonObject);
-                                if(jsonObject.getBoolean("status")){
-                                    Toast.makeText(Register_UI.this, "注册成功", Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(context, MainActivity.class));
-                                    overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
-                                    finish();
-                                }else{
-                                    LoginAndRegisterOperator.Login_error_tip(Register_UI.this,"手机号不存在或已注册！",et_password);
-                                }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                                LoginAndRegisterOperator.Login_error_tip(Register_UI.this,"手机号不存在或已注册！",et_password);
-                            }
-                        }
-                    });
-        }
-    }
-
-
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -102,7 +56,7 @@ public class Register_UI extends Activity implements View.OnClickListener {
                 finish();
                 break;
             case R.id.register_btn:
-                register();
+                NetWorkOperator.register(et_password, et_phone_number, Register_UI.this);
                 break;
         }
     }

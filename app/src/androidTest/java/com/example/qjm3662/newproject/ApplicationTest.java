@@ -1,6 +1,8 @@
 package com.example.qjm3662.newproject;
 
+import android.app.Activity;
 import android.app.Application;
+import android.content.Context;
 import android.test.ApplicationTestCase;
 
 /**
@@ -9,5 +11,12 @@ import android.test.ApplicationTestCase;
 public class ApplicationTest extends ApplicationTestCase<Application> {
     public ApplicationTest() {
         super(Application.class);
+
+    }Context context = getContext();
+
+
+    //junit3---以"test"开头就认定为测试函数
+    public void test1(){
     }
+
 }
