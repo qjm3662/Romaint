@@ -16,8 +16,11 @@ import android.widget.TextView;
 
 import com.example.qjm3662.newproject.App;
 import com.example.qjm3662.newproject.Data.StoryBean;
+import com.example.qjm3662.newproject.Data.User;
 import com.example.qjm3662.newproject.R;
 import com.example.qjm3662.newproject.myself.MyselfMyCollection;
+
+import lib.lhh.fiv.library.FrescoImageView;
 
 public class Finding_ListAdapter extends BaseAdapter {
 
@@ -38,12 +41,15 @@ public class Finding_ListAdapter extends BaseAdapter {
         private TextView title;
         private TextView time;
         private TextView introduce;
-        private ImageView icon;
+        private FrescoImageView icon;
     }
 
     @Override
     public int getCount() {
         // TODO Auto-generated method stub
+        //System.out.println("Adapter + " + App.Public_StoryList.size());
+        //System.out.println("Adapter_user + " + App.Public_Story_User.size());
+
         return App.Public_StoryList.size();
     }
 
@@ -68,7 +74,7 @@ public class Finding_ListAdapter extends BaseAdapter {
             viewHolder.flags = (TextView) view.findViewById(R.id.finding_listView_flags);
             viewHolder.time = (TextView) view.findViewById(R.id.finding_listView_time);
             viewHolder.title = (TextView) view.findViewById(R.id.finding_listView_title);
-            viewHolder.icon = (ImageView) view.findViewById(R.id.finding_listView_icon_my);
+            viewHolder.icon = (FrescoImageView) view.findViewById(R.id.finding_listView_icon_my);
             viewHolder.introduce = (TextView) view.findViewById(R.id.finding_listView_introduce);
             viewHolder.nickname = (TextView) view.findViewById(R.id.finding_listView_nickname);
             view.setTag(viewHolder);
@@ -76,11 +82,11 @@ public class Finding_ListAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) view.getTag();
         }
 
+        //时间操作
         SimpleDateFormat sdr = new SimpleDateFormat("yyyy-MM-dd-HH:mm:ss");
         sdr.setTimeZone(TimeZone.getTimeZone("GMT+8"));// 中国北京时间，东八区
-
         StoryBean listInfo = App.Public_StoryList.get(i);
-        Date date = new Date(Long.parseLong(listInfo.getCreatedAt())*1000L);
+        Date date = new Date(Long.parseLong(listInfo.getCreatedAt()) * 1000L);
         String s_date = sdr.format(date);
 
 
@@ -88,7 +94,8 @@ public class Finding_ListAdapter extends BaseAdapter {
         viewHolder.flags.setText(listInfo.getFlags());
         viewHolder.time.setText(s_date);
         viewHolder.introduce.setText(listInfo.getContent());
-        viewHolder.icon.setImageResource(R.mipmap.ic_launcher);
+        viewHolder.icon.loadView(listInfo.getUser().getAvatar(), R.mipmap.ic_launcher);
+        viewHolder.nickname.setText(listInfo.getUser().getUserName());
         return view;
     }
 

@@ -63,6 +63,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     }
 
+
+    /**
+     * 设置网络状态标记
+     */
     public void SetConect_flag(){
         //得到网络连接信息
         manager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);

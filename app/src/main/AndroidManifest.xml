@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.qjm3662.newproject">
-
     //网络权限
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
-
     //访问内存的权限
     <uses-permission android:name="android.permission.MANAGE_DOCUMENTS" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -22,9 +20,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LoginAndRegister.LoginActivity">
-
-        </activity>
+        <activity android:name=".LoginAndRegister.LoginActivity" />
         <activity android:name=".LoginAndRegister.Register_UI" />
         <activity android:name=".Main_UI.MainActivity">
             <intent-filter>
@@ -40,23 +36,12 @@
         <!-- <action android:name="android.net.wifi.STATE_CHANGE" /> -->
         <!-- </intent-filter> -->
         <!-- </receiver> -->
-        <activity android:name=".StoryView.Edit_Acticity">
-
-        </activity>
-        <activity android:name=".StoryView.Main2Activity">
-
-        </activity>
-
-
-        <activity android:name=".myself.MyselfMyAttention">
-
-        </activity>
-        <activity android:name=".myself.MyselfMyCollection">
-
-        </activity>
-        <activity android:name=".myself.MyselfMynameSet">
-
-        </activity>
+        <activity android:name=".StoryView.Edit_Acticity" />
+        <activity android:name=".StoryView.Main2Activity" />
+        <activity android:name=".myself.MyselfMyAttention" />
+        <activity android:name=".myself.MyselfMyCollection" />
+        <activity android:name=".myself.MyselfMynameSet" />
+        <activity android:name=".myself.Myself_settings"></activity>
     </application>
 
 </manifest>

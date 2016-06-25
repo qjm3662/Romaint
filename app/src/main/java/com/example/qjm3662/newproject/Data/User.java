@@ -3,133 +3,25 @@ package com.example.qjm3662.newproject.Data;
 /**
  * Created by qjm3662 on 2016/5/17 0017.
  */
-public class User {
-    private int id;
-    private String mobile;
-    private String avatar = "111";
-    private String sign;                    //签名
-    private String username;
-    private String token;
-    private String LoginToken;
-    private int sex;
-    private int noticeEnable;
-    private int followingEnable;        //我正在关注的是否公开
-    private int followerEnable;         //关注我的是否公开
-    private int aboutNotice;         //关注我的是否公开
-    private int updateNotice;         //关注我的是否公开
+public class User extends UserBase{
+
     private UserStory UserStory;
 
-    public void setId(int id) {
-        this.id = id;
-    }
 
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
-    }
-
-    public void setSign(String sign) {
-        this.sign = sign;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
-
-    public void setLoginToken(String loginToken) {
-        LoginToken = loginToken;
-    }
-
-    public void setSex(int sex) {
-        this.sex = sex;
-    }
-
-    public void setNoticeEnable(int noticeEnable) {
-        this.noticeEnable = noticeEnable;
-    }
-
-    public void setFollowingEnable(int followingEnable) {
-        this.followingEnable = followingEnable;
-    }
-
-    public void setFollowerEnable(int followerEnable) {
-        this.followerEnable = followerEnable;
-    }
-
-    public void setAboutNotice(int aboutNotice) {
-        this.aboutNotice = aboutNotice;
-    }
-
-    public void setUpdateNotice(int updateNotice) {
-        this.updateNotice = updateNotice;
-    }
-
-    public void setUserStory(com.example.qjm3662.newproject.Data.UserStory userStory) {
-        UserStory = userStory;
-    }
 
     public static void setInstance(User instance) {
         User.instance = instance;
     }
 
-    public int getId() {
-        return id;
+
+    public void setUserStory(com.example.qjm3662.newproject.Data.UserStory userStory) {
+        UserStory = userStory;
     }
 
-    public String getMobile() {
-        return mobile;
-    }
 
-    public String getAvatar() {
-        return avatar;
-    }
 
-    public String getSign() {
-        return sign;
-    }
 
-    public String getUsername() {
-        return username;
-    }
 
-    public String getToken() {
-        return token;
-    }
-
-    public String getLoginToken() {
-        return LoginToken;
-    }
-
-    public int getSex() {
-        return sex;
-    }
-
-    public int getNoticeEnable() {
-        return noticeEnable;
-    }
-
-    public int getFollowingEnable() {
-        return followingEnable;
-    }
-
-    public int getFollowerEnable() {
-        return followerEnable;
-    }
-
-    public int getAboutNotice() {
-        return aboutNotice;
-    }
-
-    public int getUpdateNotice() {
-        return updateNotice;
-    }
 
     public com.example.qjm3662.newproject.Data.UserStory getUserStory() {
         return UserStory;

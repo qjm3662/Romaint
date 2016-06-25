@@ -56,7 +56,7 @@ public class Myself extends Fragment {
 
 
 
-		mySetting = (ViewGroup)view.findViewById(R.id.myself_setting_layout_);
+		mySetting = (ViewGroup)view.findViewById(R.id.myself_myName_layout_);
 		myAttention = (ViewGroup)view.findViewById(R.id.myself_myAttention_layout_);
 		myCollection = (ViewGroup) view.findViewById(R.id.myself_myCollection_layout_);
 		tv_name = (TextView) view.findViewById(R.id.myself_myName_layout_nickname);
@@ -66,7 +66,7 @@ public class Myself extends Fragment {
 		img_avater = (FrescoImageView) view.findViewById(R.id.myself_myName_layout_img);
 
 		img_avater.loadView(User.getInstance().getAvatar(), R.mipmap.ic_launcher);
-		tv_name.setText(User.getInstance().getUsername());
+		tv_name.setText(User.getInstance().getUserName());
 		tv_sign.setText(User.getInstance().getSign());
 
 
@@ -83,51 +83,10 @@ public class Myself extends Fragment {
 		mySetting.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				final User user = User.getInstance();
-//				Intent intent = new Intent(getActivity(),MyselfMynameSet.class)
-//				.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//				startActivity(intent);
-				new Thread(new Runnable() {
-					@Override
-					public void run() {
-						OkHttpUtils
-								.post()
-								.url(Final_Static_data.URL_GET_USER_INFO_UPDATE)
-								.addHeader("LoginToken", User.getInstance().getLoginToken())
-								.addParams("avatar", user.getAvatar())
-								.addParams("userName", "253")
-								.addParams("sign", "Lost time will never find again!")
-								.addParams("sex", String.valueOf(1))
-								.addParams("updateNotice","1")
-								.addParams("noticeEnable","1")
-								.addParams("followingEnable","1")
-								.addParams("followerEnable","1")
-								.addParams("aboutNotice","1")
-								.build()
-								.execute(new StringCallback() {
-									@Override
-									public void onError(Call call, Exception e) {
-
-									}
-
-									@Override
-									public void onResponse(String response) {
-										System.out.println(response);
-										try {
-											JSONObject j = new JSONObject(response);
-											if(j.getBoolean("status")){
-												Intent intent = new Intent();
-												intent.setAction("GET_INFO");
-												context.sendBroadcast(intent);//传递过去
-											}
-											NetWorkOperator.getUserInfo(context);
-										} catch (JSONException e) {
-											e.printStackTrace();
-										}
-									}
-								});
-					}
-				}).start();
+				//final User user = User.getInstance();
+				Intent intent = new Intent(getActivity(),Myself_settings.class)
+				.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				startActivity(intent);
 			}
 		});
 		
@@ -166,7 +125,7 @@ public class Myself extends Fragment {
 			System.out.println("收到");
 			System.out.println(User.getInstance().getAvatar());
 			img_avater.loadView(User.getInstance().getAvatar(), R.mipmap.ic_launcher);
-			tv_name.setText(User.getInstance().getUsername());
+			tv_name.setText(User.getInstance().getUserName());
 			tv_sign.setText(User.getInstance().getSign());
 		}
 	}

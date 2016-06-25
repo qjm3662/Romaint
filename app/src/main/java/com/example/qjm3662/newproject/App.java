@@ -9,6 +9,7 @@ import com.example.qjm3662.newproject.Data.Story;
 import com.example.qjm3662.newproject.Data.StoryBean;
 import com.example.qjm3662.newproject.Data.StoryDB;
 import com.example.qjm3662.newproject.Data.User;
+import com.example.qjm3662.newproject.Data.UserBase;
 import com.example.qjm3662.newproject.Tool.Tool;
 import com.facebook.drawee.backends.pipeline.Fresco;
 
@@ -40,6 +41,8 @@ public class App extends Application {
 
     //广场故事列表
     public static List<StoryBean> Public_StoryList = new ArrayList<StoryBean>();
+    //与广场故事配套的，储存作者相关信息
+    public static List<UserBase> Public_Story_User = new ArrayList<UserBase>();
 
     @Override
     public void onCreate() {

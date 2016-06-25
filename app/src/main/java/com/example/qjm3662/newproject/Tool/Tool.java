@@ -39,7 +39,7 @@ public class Tool {
                 User user = User.getInstance();
                 user.setAvatar(user_info.getString(User.USER_AVATAR));
                 user.setSign(user_info.getString(User.USER_SIGN));
-                user.setUsername(user_info.getString(User.USER_USER_NAME));
+                user.setUserName(user_info.getString(User.USER_USER_NAME));
                 user.setSex(user_info.getInt(User.USER_SEX));
 //                user.setCollectedStoriesCount(jsonObject.getInt(User.USER_COLLECTED_STORIES_COUNT));
 //                System.out.println(user.getCollectedStoriesCount());

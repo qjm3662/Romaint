@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import android.app.ListFragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,13 +22,28 @@ import com.example.qjm3662.newproject.R;
 import com.example.qjm3662.newproject.StoryView.Edit_Acticity;
 import com.example.qjm3662.newproject.StoryView.Main2Activity;
 
-public class Finding extends ListFragment {
+public class Finding extends ListFragment implements SwipeRefreshLayout.OnRefreshListener{
     public static  Finding_ListAdapter adapter;
-    private TextView finding_flush;
+    private View view;
+    private static final int REFREASH = 0x110;
+    public static SwipeRefreshLayout finding_swipeRefreshLayout;
+    private Handler handler = new Handler(){
+        public void handleMessage(Message msg){
+            switch(msg.what){
+                case REFREASH:
+                    if(User.getInstance().getLoginToken() != null ){
+                        NetWorkOperator.Get_finding_story(0);
+                    }else{
+                        Toast.makeText(view.getContext(), "请先登录", Toast.LENGTH_SHORT).show();
+                    }
+                    break;
+            }
+        }
+    };
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.finding, container, false);
+        view = inflater.inflate(R.layout.finding, container, false);
         ArrayList<Finding_Listinfo> arraylist = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
             arraylist.add(new Finding_Listinfo(
@@ -35,17 +53,10 @@ public class Finding extends ListFragment {
                     "有一个很长的故事叫山里的故事", R.drawable.img_my));
         }
 
-        finding_flush = (TextView) view.findViewById(R.id.finding_flush);
-        finding_flush.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(User.getInstance().getLoginToken() != null ){
-                    NetWorkOperator.Get_finding_story();
-                }else{
-                    Toast.makeText(view.getContext(), "请先登录", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+        finding_swipeRefreshLayout = (SwipeRefreshLayout)
+                view.findViewById(R.id.finding_swipeRefreshLayout);
+        finding_swipeRefreshLayout.setOnRefreshListener(this);
+
 
         adapter = new Finding_ListAdapter(getActivity());
         setListAdapter(adapter);
@@ -63,5 +74,10 @@ public class Finding extends ListFragment {
         i.putExtra("JUDGE",false);
         i.putExtra("position",position);
         startActivity(i);
+    }
+
+    @Override
+    public void onRefresh() {
+        handler.sendEmptyMessageDelayed(REFREASH,0);
     }
 }

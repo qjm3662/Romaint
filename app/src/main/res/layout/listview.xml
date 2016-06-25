@@ -38,10 +38,10 @@
             android:textSize="12sp"
             android:textColor="@color/dark_normal"
             android:text="14:14"/>
-        <ImageView
+        <lib.lhh.fiv.library.FrescoImageView
             android:id="@+id/finding_listView_icon_my"
-            android:layout_width="14dp"
-            android:layout_height="14dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_marginLeft="14dp"
             android:layout_marginTop="12dp"
             android:src="@drawable/img_my"
