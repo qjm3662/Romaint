@@ -74,10 +74,9 @@ public class Myself_settings extends Activity {
                                         try {
                                             JSONObject j = new JSONObject(response);
                                             if(j.getBoolean("status")){
+
                                                 NetWorkOperator.getUserInfo(context);
                                             }
-
-
                                         } catch (JSONException e) {
                                             e.printStackTrace();
                                         }

@@ -6,10 +6,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.example.qjm3662.newproject.Data.Final_Static_data;
 import com.example.qjm3662.newproject.Data.Story;
 import com.example.qjm3662.newproject.Data.StoryBean;
@@ -19,21 +17,12 @@ import com.example.qjm3662.newproject.Finding.Finding;
 import com.example.qjm3662.newproject.LoginAndRegister.LoginAndRegisterOperator;
 import com.example.qjm3662.newproject.Main_UI.MainActivity;
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.IOException;
-
 import okhttp3.Call;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
 
 /**
  * Created by qjm3662 on 2016/6/4 0004.
@@ -325,7 +314,7 @@ public class NetWorkOperator {
 
                             @Override
                             public void onResponse(String response) {
-                                System.out.println(response + "啦啦啦");
+                                //System.out.println(response + "啦啦啦");
                                 try {
                                     JSONObject jsonObject = new JSONObject(response);
                                     JSONObject jsonObject1 = jsonObject.getJSONObject("msg");
