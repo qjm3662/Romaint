@@ -30,6 +30,13 @@ import java.io.ByteArrayOutputStream;
  * Created by qjm3662 on 2016/5/31 0031.
  */
 public class Tool {
+
+
+    /**
+     * 将User类的Json数据存到单例化的User对象中
+     * @param s
+     * @param s2
+     */
     //JsonObject to User
     public static void str_to_user(String s, String s2){
         if(s != null){
@@ -41,8 +48,6 @@ public class Tool {
                 user.setSign(user_info.getString(User.USER_SIGN));
                 user.setUserName(user_info.getString(User.USER_USER_NAME));
                 user.setSex(user_info.getInt(User.USER_SEX));
-//                user.setCollectedStoriesCount(jsonObject.getInt(User.USER_COLLECTED_STORIES_COUNT));
-//                System.out.println(user.getCollectedStoriesCount());
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -63,7 +68,13 @@ public class Tool {
     }
 
 
-
+    /**
+     * 插入图片（图文混排）
+     * @param bitmap
+     * @param path
+     * @param context
+     * @param tv
+     */
     public static void insertPic(Bitmap bitmap, String path, Context context, EditText tv) {
 
         // 根据Bitmap对象创建ImageSpan对象
@@ -95,6 +106,13 @@ public class Tool {
     }
 
 
+    /**
+     * 重新设置图片的大小
+     * @param b
+     * @param x
+     * @param y
+     * @return
+     */
     public static Bitmap resize_bitmap(Bitmap b,float x,float y)
     {
         //b = compressImage(b);
@@ -109,58 +127,74 @@ public class Tool {
         return resizeBmp;
     }
 
-    public static Bitmap compressImage(Bitmap image) {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        image.compress(Bitmap.CompressFormat.JPEG, 100, baos);//质量压缩方法，这里100表示不压缩，把压缩后的数据存放到baos中
-        int options = 100;
-        while ( baos.toByteArray().length / 1024>100) {    //循环判断如果压缩后图片是否大于100kb,大于继续压缩
-            baos.reset();//重置baos即清空baos
-            options -= 10;//每次都减少10
-            image.compress(Bitmap.CompressFormat.JPEG, options, baos);//这里压缩options%，把压缩后的数据存放到baos中
-
-        }
-        ByteArrayInputStream isBm = new ByteArrayInputStream(baos.toByteArray());//把压缩后的数据baos存放到ByteArrayInputStream中
-        Bitmap bitmap = BitmapFactory.decodeStream(isBm, null, null);//把ByteArrayInputStream数据生成图片
-        return bitmap;
-    }
 
 
-    /***
-     * 图片的缩放方法
-     *
-     * @param bitmap
-     *            ：源图片资源
-     * @param newWidth
-     *            ：缩放后宽度
-     * @param newHeight
-     *            ：缩放后高度
+
+
+
+
+
+
+
+
+
+
+//    public static Bitmap compressImage(Bitmap image) {
+//        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//        image.compress(Bitmap.CompressFormat.JPEG, 100, baos);//质量压缩方法，这里100表示不压缩，把压缩后的数据存放到baos中
+//        int options = 100;
+//        while ( baos.toByteArray().length / 1024>100) {    //循环判断如果压缩后图片是否大于100kb,大于继续压缩
+//            baos.reset();//重置baos即清空baos
+//            options -= 10;//每次都减少10
+//            image.compress(Bitmap.CompressFormat.JPEG, options, baos);//这里压缩options%，把压缩后的数据存放到baos中
+//
+//        }
+//        ByteArrayInputStream isBm = new ByteArrayInputStream(baos.toByteArray());//把压缩后的数据baos存放到ByteArrayInputStream中
+//        Bitmap bitmap = BitmapFactory.decodeStream(isBm, null, null);//把ByteArrayInputStream数据生成图片
+//        return bitmap;
+//    }
+//
+//
+//
+//
+//    /***
+//     * 图片的缩放方法
+//     *
+//     * @param bitmap
+//     *            ：源图片资源
+//     * @param newWidth
+//     *            ：缩放后宽度
+//     * @param newHeight
+//     *            ：缩放后高度
+//     * @return
+//     */
+//    public static Bitmap zoomImage(Bitmap bitmap, double newWidth,
+//                                   double newHeight) {
+//
+//        bitmap = compressImage(bitmap);
+//        System.out.println("new" + newHeight + "  " + newWidth);
+//        // 获取这个图片的宽和高
+//        float width = bitmap.getWidth();
+//        float height = bitmap.getHeight();
+//        // 创建操作图片用的matrix对象
+//        Matrix matrix = new Matrix();
+//        // 计算宽高缩放率
+//        float scaleWidth = ((float) newWidth) / width;
+//        float scaleHeight = ((float) newHeight) / height;
+//        // 缩放图片动作
+//        matrix.postScale(scaleWidth, scaleHeight);
+//        Bitmap bitmap1 = Bitmap.createBitmap(bitmap, 0, 0, (int) width,
+//                (int) height, matrix, true);
+//        return bitmap1;
+//    }
+
+
+    /**
+     * 通过选择图片返回的字符串获取到图片所在的本地路径
+     * @param context
+     * @param uri
      * @return
      */
-    public static Bitmap zoomImage(Bitmap bitmap, double newWidth,
-                                   double newHeight) {
-
-        bitmap = compressImage(bitmap);
-        System.out.println("new" + newHeight + "  " + newWidth);
-        // 获取这个图片的宽和高
-        float width = bitmap.getWidth();
-        float height = bitmap.getHeight();
-        // 创建操作图片用的matrix对象
-        Matrix matrix = new Matrix();
-        // 计算宽高缩放率
-        float scaleWidth = ((float) newWidth) / width;
-        float scaleHeight = ((float) newHeight) / height;
-        // 缩放图片动作
-        matrix.postScale(scaleWidth, scaleHeight);
-        Bitmap bitmap1 = Bitmap.createBitmap(bitmap, 0, 0, (int) width,
-                (int) height, matrix, true);
-        return bitmap1;
-    }
-
-
-
-
-
-
     @TargetApi(Build.VERSION_CODES.KITKAT)
     public static String getPath(final Context context, final Uri uri) {
 

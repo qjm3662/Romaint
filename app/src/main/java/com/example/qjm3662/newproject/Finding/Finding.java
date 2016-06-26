@@ -23,16 +23,19 @@ import com.example.qjm3662.newproject.StoryView.Edit_Acticity;
 import com.example.qjm3662.newproject.StoryView.Main2Activity;
 
 public class Finding extends ListFragment implements SwipeRefreshLayout.OnRefreshListener{
+
+
     public static  Finding_ListAdapter adapter;
     private View view;
     private static final int REFREASH = 0x110;
     public static SwipeRefreshLayout finding_swipeRefreshLayout;
+
     private Handler handler = new Handler(){
         public void handleMessage(Message msg){
             switch(msg.what){
                 case REFREASH:
                     if(User.getInstance().getLoginToken() != null ){
-                        NetWorkOperator.Get_finding_story(0);
+                        NetWorkOperator.Get_finding_story(0,String.valueOf(System.currentTimeMillis()));
                     }else{
                         Toast.makeText(view.getContext(), "请先登录", Toast.LENGTH_SHORT).show();
                     }
@@ -40,6 +43,7 @@ public class Finding extends ListFragment implements SwipeRefreshLayout.OnRefres
             }
         }
     };
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -57,6 +61,13 @@ public class Finding extends ListFragment implements SwipeRefreshLayout.OnRefres
                 view.findViewById(R.id.finding_swipeRefreshLayout);
         finding_swipeRefreshLayout.setOnRefreshListener(this);
 
+
+        view.findViewById(R.id.up_flush).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NetWorkOperator.Get_finding_story(1,App.Public_StoryList.get(App.Public_StoryList.size()-1).getUpdatedAt());
+            }
+        });
 
         adapter = new Finding_ListAdapter(getActivity());
         setListAdapter(adapter);

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.Toast;
 import com.example.qjm3662.newproject.Data.Final_Static_data;
@@ -34,7 +35,7 @@ public class NetWorkOperator {
      * 获得广场故事
      * @param flag  0表示下拉刷新， 1表示上拉加载更多
      */
-    public static void Get_finding_story(final int flag) {
+    public static void Get_finding_story(final int flag, final String timestamps) {
 
         new Thread(new Runnable() {
             @Override
@@ -43,7 +44,7 @@ public class NetWorkOperator {
                         .post()
                         .url(Final_Static_data.URL_GET_PUBLIC_STORIES)
                         .addHeader("LoginToken", User.getInstance().getLoginToken())
-                        .addParams("timestamps", String.valueOf(System.currentTimeMillis()))
+                        .addParams("timestamps", timestamps)
                         .build()
                         .execute(new StringCallback() {
                             @Override
@@ -60,7 +61,7 @@ public class NetWorkOperator {
                                     //如果登陆失效则重新获取Token,再次执行该函数
                                     if (object.getString("msg").equals("LoginToken")) {
                                         getNew_Token(User.getInstance().getToken());
-                                        Get_finding_story(flag);
+                                        Get_finding_story(flag,timestamps);
                                     }
 
                                     final Gson gson = new Gson();
@@ -78,16 +79,19 @@ public class NetWorkOperator {
                                             switch (msg.what) {
                                                 case 1:
                                                     System.out.println("case1");
+                                                    int length_before = App.Public_StoryList.size();
                                                     for (int i = 0; i < jsonObject.length(); i++) {
                                                         StoryBean story = null;
+                                                        System.out.println(App.Public_Story_User.size() + "  " + App.Public_StoryList.size());
                                                         try {
                                                             //用Gson解析器，将返回的Json数据转为Story对象
                                                             story = gson.fromJson(jsonObject.get(i).toString(), StoryBean.class);
 
                                                             //将故事对应的用户信息加到故事里去
-                                                            story.setUser(App.Public_Story_User.get(i));
+                                                            story.setUser(App.Public_Story_User.get(i+length_before));
                                                             if (!App.Public_StoryList.contains(story)) {
                                                                 App.Public_StoryList.add(story);
+                                                                //Log.e("Story",story.toString());
                                                             }
                                                         } catch (JSONException e) {
                                                             e.printStackTrace();
@@ -126,6 +130,7 @@ public class NetWorkOperator {
         final int[] flag_if_over = {0};
         //暂时存储用户ID
         String id;
+        final int length_before = App.Public_Story_User.size();
 
         //先创建对应数量的实例
         for (int i = 0; i < jsonArray.length(); i++) {
@@ -170,9 +175,9 @@ public class NetWorkOperator {
 
                                     //将用户信息转为UserBase对象
                                     UserBase userBase = gson.fromJson(response_jb.getJSONObject("msg").getJSONObject("user").toString(), UserBase.class);
-                                    App.Public_Story_User.set(flag, userBase);
+                                    App.Public_Story_User.set(flag+length_before, userBase);
 
-                                    System.out.println(App.Public_Story_User.get(flag).getId());
+                                    System.out.println(App.Public_Story_User.get(flag+length_before).getId());
 
                                     //System.out.println("finalI :"+finalI);
                                     //Log.e("GET_USER_INFO_FLAG",i_num[0] + "  " + finalI);

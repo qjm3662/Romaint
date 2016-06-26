@@ -20,7 +20,19 @@ public class StoryBean {
 
     @Override
     public String toString() {
-        return super.toString();
+        return "StoryBean{" +
+                "id='" + id + '\'' +
+                ", title='" + title + '\'' +
+                ", flags='" + flags + '\'' +
+                ", content='" + content + '\'' +
+                ", publicEnable=" + publicEnable +
+                ", createdAt='" + createdAt + '\'' +
+                ", updatedAt='" + updatedAt + '\'' +
+                ", AuthorID=" + AuthorID +
+                ", likeCount=" + likeCount +
+                ", Users=" + Users +
+                ", user=" + user +
+                '}';
     }
 
     public void setId(String id) {

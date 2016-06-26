@@ -86,7 +86,7 @@ public class MainActivity extends Activity implements OnClickListener {
                 setTab_selection(1);
                 System.out.println("MainActivity : " + User.getInstance().getLoginToken());
                 if(User.getInstance().getLoginToken() != null){
-                    NetWorkOperator.Get_finding_story(0);
+                    NetWorkOperator.Get_finding_story(0,String.valueOf(System.currentTimeMillis()));
                 }
                 else{
                     Toast.makeText(MainActivity.this, "请先登录", Toast.LENGTH_SHORT).show();

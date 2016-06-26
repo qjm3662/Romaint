@@ -32,9 +32,6 @@ import okhttp3.Call;
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ImageView img_back;
-    private LayoutInflater inflater;
-    private RelativeLayout layout;
-    private PopupWindow my_window;
     private Button btn_login;
     private TextView tv_forget_password;
     private EditText et_username;
