@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context="com.example.qjm3662.newproject.Finding.StoryView">
+
+    <include layout="@layout/title_bar" />
+
+    <com.makeramen.roundedimageview.RoundedImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/user_info_item_head"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="14dp"
+        android:layout_marginTop="62dp"
+        android:background="@drawable/circle_head"
+        android:scaleType="fitCenter"
+        android:src="@mipmap/ic_launcher"
+        app:riv_border_color="#333333"
+        app:riv_border_width="0dip"
+        app:riv_corner_radius="30dip"
+        app:riv_mutate_background="true"
+        app:riv_oval="true"
+        app:riv_tile_mode="clamp" />
+
+    <TextView
+        android:id="@+id/user_info_item_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="62dp"
+        android:layout_toRightOf="@id/user_info_item_head"
+        android:text="Robbin"
+        android:textColor="@color/dark_deep"
+        android:textSize="16.67sp" />
+
+    <TextView
+        android:id="@+id/user_info_item_sign"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/user_info_item_name"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@id/user_info_item_head"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:text="I will do it now~"
+        android:textColor="@color/dark_normal"
+        android:textSize="13.3sp" />
+
+    <TextView
+        android:id="@+id/tv_praise"
+        android:layout_width="wrap_content"
+        android:layout_height="22dp"
+        android:layout_alignParentRight="true"
+        android:layout_gravity="center_vertical"
+        android:layout_marginRight="17dp"
+        android:layout_marginTop="62dp"
+        android:background="@drawable/rectangle_tip"
+        android:gravity="center"
+        android:minWidth="40dp"
+        android:text="200"
+        android:textColor="@color/green"
+        android:textSize="16.67sp" />
+
+
+    <TextView
+        android:id="@+id/tv_flag"
+        android:layout_width="wrap_content"
+        android:layout_height="22dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="17dp"
+        android:layout_marginTop="62dp"
+        android:layout_toLeftOf="@id/tv_praise"
+        android:background="@drawable/rectangle_tip"
+        android:gravity="center"
+        android:minWidth="40dp"
+        android:text="故事"
+        android:textColor="@color/green"
+        android:textSize="16.67sp" />
+
+
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/user_info_item_head"
+        android:layout_marginBottom="50dp"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="17dp"
+        android:layout_marginTop="16dp"
+        android:gravity="top"
+        android:isScrollContainer="true"
+        android:text="从前有座山，山里有座庙，庙里有个老和尚和一个小和尚。老和尚再跟小和尚讲故事：从前有座山，山里有......"
+        android:textColor="@color/dark_normal" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="#FFFFFF"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:id="@+id/rl_transmit"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="9dp">
+
+                <ImageView
+                    android:id="@+id/transmit"
+                    android:layout_width="24dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/img_transmit" />
+
+                <TextView
+                    android:layout_width="24dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@id/transmit"
+                    android:layout_below="@id/transmit"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center"
+                    android:text="转发"
+                    android:textColor="@color/gray_normal"
+                    android:textSize="11sp" />
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_praise"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="8dp">
+
+                <ImageView
+                    android:id="@+id/praise"
+                    android:layout_width="23dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/img_favour_choose" />
+
+                <TextView
+                    android:layout_width="20dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@id/praise"
+                    android:layout_below="@id/praise"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center"
+                    android:text="赞"
+                    android:textColor="@color/green"
+                    android:textSize="11sp" />
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_collect"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="8dp">
+
+                <ImageView
+                    android:id="@+id/collect"
+                    android:layout_width="24dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/img_collect_choose" />
+
+                <TextView
+                    android:layout_width="24dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@id/collect"
+                    android:layout_below="@id/collect"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center"
+                    android:text="收藏"
+                    android:textColor="@color/green"
+                    android:textSize="11sp" />
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_comment"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="9dp">
+
+                <ImageView
+                    android:id="@+id/comment"
+                    android:layout_width="22dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/img_comment" />
+
+                <TextView
+                    android:layout_width="22dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@id/comment"
+                    android:layout_below="@id/comment"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center"
+                    android:text="评论"
+                    android:textColor="@color/gray_normal"
+                    android:textSize="11sp" />
+            </RelativeLayout>
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+</RelativeLayout>

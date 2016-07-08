@@ -1,10 +1,6 @@
 package com.example.qjm3662.newproject.Data;
 
-import com.example.qjm3662.newproject.Slide.SlideView;
-
-import java.sql.Date;
-import java.util.Calendar;
-import java.util.List;
+import com.example.qjm3662.newproject.StoryView.Slide.SlideView;
 
 /**
  * 故事类

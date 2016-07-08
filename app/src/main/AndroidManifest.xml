@@ -22,26 +22,27 @@
         android:theme="@style/AppTheme">
         <activity android:name=".LoginAndRegister.LoginActivity" />
         <activity android:name=".LoginAndRegister.Register_UI" />
-        <activity android:name=".Main_UI.MainActivity">
+        <activity android:name=".Main_UI.MainActivity"></activity>
+        <activity android:name=".StoryView.Edit_Acticity" />
+        <activity android:name=".StoryView.Story_pre" />
+        <activity android:name=".myself.Edit_sign" />
+        <activity android:name=".myself.FeedBack" />
+        <activity android:name=".myself.Care.care" />
+        <activity android:name=".myself.settings.my_settings" />
+        <activity android:name=".myself.settings.Public_settings" />
+        <activity android:name=".myself.settings.Notification" />
+        <activity android:name=".myself.collection.collection" />
+        <activity android:name=".StoryView.Edit_Story.Edit_Story" />
+        <activity android:name=".Finding.StoryView" />
+        <activity android:name=".Finding.HomePage" />
+        <activity android:name=".LunchActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!-- <receiver android:name=".NetworkReceiver" > -->
-        <!-- <intent-filter> -->
-        <!-- <action android:name="android.net.conn.CONNECTIVITY_CHANGE" /> -->
-        <!-- <action android:name="android.net.wifi.WIFI_STATE_CHANGED" /> -->
-        <!-- <action android:name="android.net.wifi.STATE_CHANGE" /> -->
-        <!-- </intent-filter> -->
-        <!-- </receiver> -->
-        <activity android:name=".StoryView.Edit_Acticity" />
-        <activity android:name=".StoryView.Main2Activity" />
-        <activity android:name=".myself.MyselfMyAttention" />
-        <activity android:name=".myself.MyselfMyCollection" />
-        <activity android:name=".myself.MyselfMynameSet" />
-        <activity android:name=".myself.Myself_settings"></activity>
+        <activity android:name=".myself.Article.ArticleActivity"></activity>
     </application>
 
 </manifest>

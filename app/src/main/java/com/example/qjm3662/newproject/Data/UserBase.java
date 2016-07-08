@@ -1,6 +1,7 @@
 package com.example.qjm3662.newproject.Data;
 
 /**
+ *
  * Created by qjm3662 on 2016/6/24 0024.
  */
 public class UserBase {
@@ -12,8 +13,8 @@ public class UserBase {
     private String token;
     private String LoginToken;
     private int sex;
-    private int followingEnable;        //我正在关注的是否公开
-    private int followerEnable;         //关注我的是否公开
+    private int followingEnable;        //是否公开粉丝
+    private int followerEnable;         //是否公开关注人
     private int noticeEnable;
     private int aboutNotice;         //关注我的是否公开
     private int updateNotice;         //关注我的是否公开

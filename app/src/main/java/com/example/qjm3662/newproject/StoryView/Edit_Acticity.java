@@ -26,16 +26,12 @@ import com.example.qjm3662.newproject.App;
 import com.example.qjm3662.newproject.Data.Story;
 import com.example.qjm3662.newproject.Data.StoryDB;
 import com.example.qjm3662.newproject.R;
-import com.example.qjm3662.newproject.Main_UI.StoryFragment;
 import com.example.qjm3662.newproject.Tool.Tool;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.sql.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.TimeZone;
 
 public class Edit_Acticity extends Activity implements View.OnClickListener {
 
@@ -86,8 +82,6 @@ public class Edit_Acticity extends Activity implements View.OnClickListener {
             title = intent.getStringExtra(Edit_Acticity.EDIT_TITLE);
             et_title.setText(title);
             getImg_Src(content);
-            System.out.println("233");
-            System.out.println(content);
         }
 
 
@@ -97,7 +91,7 @@ public class Edit_Acticity extends Activity implements View.OnClickListener {
             System.out.println("null");
         }
 
-        if (intent.getBooleanExtra(Main2Activity.COMU_CODE_READ, false)) {
+        if (intent.getBooleanExtra(Story_pre.COMU_CODE_READ, false)) {
             display();
             save_story();
             judge = false;
@@ -126,6 +120,7 @@ public class Edit_Acticity extends Activity implements View.OnClickListener {
                 assert content != null;
                 edit_text.append(content.substring(0, index_int.get(0)));
             } else if (i % 2 != 0 && i < index_int.size() - 1) {
+                edit_text.append("    ");
                 edit_text.append(content.substring(index_int.get(i), index_int.get(i + 1)));
             }
         }
@@ -135,12 +130,12 @@ public class Edit_Acticity extends Activity implements View.OnClickListener {
         if (index_int.size() != 0) {
             start = index_int.get(index_int.size() - 1);
         }
-        System.out.println("begin");
-        System.out.println(content);
-
-        System.out.println(start);
+//        System.out.println("begin");
+//        System.out.println(content);
+//
+//        System.out.println(start);
         end = content.length();
-        System.out.println(end);
+//        System.out.println(end);
         edit_text.append(content.substring(start, end));
     }
 

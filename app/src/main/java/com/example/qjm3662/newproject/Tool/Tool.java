@@ -1,11 +1,12 @@
 package com.example.qjm3662.newproject.Tool;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.ContentUris;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Build;
@@ -17,29 +18,108 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ImageSpan;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.example.qjm3662.newproject.App;
 import com.example.qjm3662.newproject.Data.User;
+import com.example.qjm3662.newproject.Data.UserBase;
+import com.example.qjm3662.newproject.myself.MyDialog;
+import com.example.qjm3662.newproject.NetWorkOperator;
+import com.example.qjm3662.newproject.R;
+import com.google.gson.Gson;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by qjm3662 on 2016/5/31 0031.
  */
 public class Tool {
 
+//    public static final int PHOTO_REQUEST_TAKEPHOTO = 1;// 拍照
+//    public static final int PHOTO_REQUEST_GALLERY = 2;// 从相册中选择
+//    public static final int PHOTO_REQUEST_CUT = 3;// 结果
+//
+//    // 使用系统当前日期加以调整作为照片的名称
+//    public static String getPhotoFileName() {
+//        Date date = new Date(System.currentTimeMillis());
+//        SimpleDateFormat dateFormat = new SimpleDateFormat(
+//                "'IMG'_yyyyMMdd_HHmmss");
+//        return dateFormat.format(date) + ".jpg";
+//    }
+//
+//    public static void getCamera(Context context, File file) {
+//        Intent cameraintent = new Intent(
+//                MediaStore.ACTION_IMAGE_CAPTURE);
+//        // 指定调用相机拍照后照片的储存路径
+//        cameraintent.putExtra(MediaStore.EXTRA_OUTPUT,
+//                Uri.fromFile(file));
+//        ((Activity)context).startActivityForResult(cameraintent,
+//                PHOTO_REQUEST_TAKEPHOTO);
+//    }
+//
+//    public static void getAlbum(Context context) {
+//        Intent getAlbum = new Intent(Intent.ACTION_GET_CONTENT);
+//        getAlbum.setType("image/*");
+//        System.out.println();
+//        ((Activity)context).startActivityForResult(getAlbum, PHOTO_REQUEST_GALLERY);
+//    }
+//
+//    /**
+//     * 调用系统裁剪功能
+//     *
+//     * @param uri
+//     */
+//    public static void startPhotoZoom(Uri uri, Context context) {
+//        Intent intent = new Intent("com.android.camera.action.CROP");
+//        intent.setDataAndType(uri, "image/*");
+//        // crop为true是设置在开启的intent中设置显示的view可以剪裁
+//        intent.putExtra("crop", "true");
+//
+//        // aspectX aspectY 是宽高的比例
+//        intent.putExtra("aspectX", 1);
+//        intent.putExtra("aspectY", 1);
+//
+//        // outputX,outputY 是剪裁图片的宽高
+//        intent.putExtra("outputX", 300);
+//        intent.putExtra("outputY", 300);
+//        intent.putExtra("return-data", true);
+//        intent.putExtra("noFaceDetection", true);
+//        System.out.println("22================");
+//        ((Activity)context).startActivityForResult(intent, PHOTO_REQUEST_CUT);
+//    }
+
+
+    /**
+     * 判断是否登陆
+     * @param context
+     * @return
+     */
+    public static boolean JudgeIsLongin(Context context){
+        if(User.getInstance().getLoginToken() != null){
+            return true;
+        }else{
+            Toast.makeText(context, "请先登录", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+    }
 
     /**
      * 将User类的Json数据存到单例化的User对象中
+     *
      * @param s
      * @param s2
      */
     //JsonObject to User
-    public static void str_to_user(String s, String s2){
-        if(s != null){
+    public static void str_to_user(String s, String s2) {
+        if (s != null) {
             try {
                 JSONObject jsonObject = new JSONObject(s);
                 JSONObject user_info = jsonObject.getJSONObject("user");
@@ -48,12 +128,49 @@ public class Tool {
                 user.setSign(user_info.getString(User.USER_SIGN));
                 user.setUserName(user_info.getString(User.USER_USER_NAME));
                 user.setSex(user_info.getInt(User.USER_SEX));
+
+                JSONArray js_array_follower = jsonObject.getJSONArray("follower");
+                JSONArray js_array_following = jsonObject.getJSONArray("following");
+                Gson gson = new Gson();
+                List<UserBase> list_user_base = new ArrayList<UserBase>();
+                UserBase userBase = null;
+                if(js_array_follower.length() != 0){
+                    if(!js_array_follower.get(0).toString().equals("false")){
+                        for(int i = 0; i < js_array_follower.length(); i++){
+                            System.out.println(js_array_follower.get(i).toString() + "dscsadc");
+                            userBase = gson.fromJson(js_array_follower.get(i).toString(),UserBase.class);
+                            System.out.println("有人关注我 ： " + userBase.getId());
+                            list_user_base.add(userBase);
+                            App.Public_Care_Me.add(userBase);
+                        }
+                        if(list_user_base.size() != 0){
+                            user.setFollower(list_user_base);
+                        }
+                    }
+                }
+
+                list_user_base.clear();
+
+                if(js_array_following.length() != 0){
+                    if(!js_array_following.get(0).toString().equals("false")){
+                        for(int i = 0; i < js_array_following.length(); i++){
+                            userBase = gson.fromJson(js_array_following.get(i).toString(),UserBase.class);
+                            System.out.println("我在关注TA ： " + userBase.getId());
+                            list_user_base.add(userBase);
+                            App.Public_Care_Other.add(userBase);
+                        }
+                        if(list_user_base.size() != 0){
+                            user.setFollowing(list_user_base);
+                        }
+                    }
+                }
+                user.setCollectedStoriesCount(jsonObject.getInt("collectedStoriesCount"));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
         }
-        if(s2 != null){
+        if (s2 != null) {
             try {
                 System.out.println(s2);
                 JSONObject user_info = new JSONObject(s2);
@@ -69,7 +186,33 @@ public class Tool {
 
 
     /**
+     * 弹出编辑框
+     *
+     * @param context
+     * @param content
+     */
+    public static void ShowDialog(final Context context, final String content, String title) {
+        final MyDialog myDialog = new MyDialog(context, R.style.myDialogTheme, content, "编辑用户名", "请输入用户名",0);
+        myDialog.show();
+        myDialog.setClickListener(new MyDialog.ClickListenerInterface() {
+            @Override
+            public void doConfirm() {
+                User.getInstance().setUserName(myDialog.getDialog_et().getText().toString());
+                NetWorkOperator.UpDateUserInfo(context);
+                myDialog.dismiss();
+            }
+
+            @Override
+            public void doCancel() {
+                myDialog.dismiss();
+            }
+        });
+    }
+
+
+    /**
      * 插入图片（图文混排）
+     *
      * @param bitmap
      * @param path
      * @param context
@@ -94,9 +237,9 @@ public class Tool {
         int index = tv.getSelectionStart(); // 获取光标所在位置
         Editable edit_text = tv.getEditableText();
         if (index < 0 || index >= edit_text.length()) {
-            edit_text.append('\n');
+//            edit_text.append('\n');
             edit_text.append(spannableString);
-            edit_text.append('\n');
+//            edit_text.append('\n');
         } else {
             edit_text.insert(index, spannableString);
         }
@@ -108,35 +251,24 @@ public class Tool {
 
     /**
      * 重新设置图片的大小
+     *
      * @param b
      * @param x
      * @param y
      * @return
      */
-    public static Bitmap resize_bitmap(Bitmap b,float x,float y)
-    {
+    public static Bitmap resize_bitmap(Bitmap b, float x, float y) {
         //b = compressImage(b);
-        int w=b.getWidth();
-        int h=b.getHeight();
-        float sx=(float)x/w;//要强制转换，不转换我的在这总是死掉。
-        float sy=(float)y/h;
+        int w = b.getWidth();
+        int h = b.getHeight();
+        float sx = (float) x / w;//要强制转换，不转换我的在这总是死掉。
+        float sy = (float) y / h;
         Matrix matrix = new Matrix();
         matrix.postScale(sx, sy); // 长和宽放大缩小的比例
         Bitmap resizeBmp = Bitmap.createBitmap(b, 0, 0, w,
                 h, matrix, true);
         return resizeBmp;
     }
-
-
-
-
-
-
-
-
-
-
-
 
 
 //    public static Bitmap compressImage(Bitmap image) {
@@ -191,6 +323,7 @@ public class Tool {
 
     /**
      * 通过选择图片返回的字符串获取到图片所在的本地路径
+     *
      * @param context
      * @param uri
      * @return
@@ -239,7 +372,7 @@ public class Tool {
                 }
 
                 final String selection = "_id=?";
-                final String[] selectionArgs = new String[] {
+                final String[] selectionArgs = new String[]{
                         split[1]
                 };
 
@@ -267,9 +400,9 @@ public class Tool {
      * Get the value of the data column for this Uri. This is useful for
      * MediaStore Uris, and other file-based ContentProviders.
      *
-     * @param context The context.
-     * @param uri The Uri to query.
-     * @param selection (Optional) Filter used in the query.
+     * @param context       The context.
+     * @param uri           The Uri to query.
+     * @param selection     (Optional) Filter used in the query.
      * @param selectionArgs (Optional) Selection arguments used in the query.
      * @return The value of the _data column, which is typically a file path.
      */

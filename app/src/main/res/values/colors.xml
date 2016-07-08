@@ -4,8 +4,8 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="gray_deep">#9a909a</color>
-    <color name="gray_normal">#e0c1bac1</color>
-    <color name="gray_light">#c1bac1</color>
+    <color name="gray_normal">#c1bac1</color>
+    <color name="gray_light">#ece9ec</color>
 
     <color name="dark_deep">#202020</color>
     <color name="dark_normal">#535353</color>
@@ -17,5 +17,7 @@
     <color name="blue_light">#e9faf8</color>
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
+
+
 
 </resources>

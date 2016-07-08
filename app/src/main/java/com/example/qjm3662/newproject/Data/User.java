@@ -1,36 +1,55 @@
 package com.example.qjm3662.newproject.Data;
 
+import java.util.List;
+
 /**
+ *
  * Created by qjm3662 on 2016/5/17 0017.
  */
 public class User extends UserBase{
 
     private UserStory UserStory;
-
-
+    private List<UserBase> follower;
+    private List<UserBase> following;
+    private int collectedStoriesCount;      //收藏的故事数目
 
     public static void setInstance(User instance) {
         User.instance = instance;
     }
-
-
     public void setUserStory(com.example.qjm3662.newproject.Data.UserStory userStory) {
         UserStory = userStory;
     }
-
-
-
-
-
 
     public com.example.qjm3662.newproject.Data.UserStory getUserStory() {
         return UserStory;
     }
 
-    //private int collectedStoriesCount;      //收藏的故事数目
+    public List<UserBase> getFollower() {
+        return follower;
+    }
+
+    public void setFollower(List<UserBase> follower) {
+        this.follower = follower;
+    }
+
+    public List<UserBase> getFollowing() {
+        return following;
+    }
+
+    public void setFollowing(List<UserBase> following) {
+        this.following = following;
+    }
+
+    public int getCollectedStoriesCount() {
+        return collectedStoriesCount;
+    }
+
+    public void setCollectedStoriesCount(int collectedStoriesCount) {
+        this.collectedStoriesCount = collectedStoriesCount;
+    }
 
 
-   // {"id":1,
+    // {"id":1,
     // "mobile":"18340861710",
     // "avatar":"www.baidu.com",
     // "sign":"test",
@@ -67,5 +86,8 @@ public class User extends UserBase{
         }
         return instance;
     }
-
+    public static void deleteUser(){
+        instance = null;
+        getInstance();
+    }
 }

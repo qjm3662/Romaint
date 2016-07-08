@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context="com.example.qjm3662.newproject.StoryView.Edit_Story.Edit_Story">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="62dp"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/img_x"
+            android:layout_width="23dp"
+            android:layout_height="23dp"
+            android:layout_marginLeft="14dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/img_x" />
+
+        <ImageView
+            android:id="@+id/img_tick"
+            android:layout_width="@dimen/bar_img_length"
+            android:layout_height="@dimen/bar_img_length"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/img_tick" />
+
+        <ImageView
+            android:id="@+id/img_flag"
+            android:layout_width="@dimen/bar_img_length"
+            android:layout_height="@dimen/bar_img_length"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="20dp"
+            android:layout_toLeftOf="@id/img_tick"
+            android:src="@drawable/img_sign" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <EditText
+            android:background="@drawable/rectangle_input"
+            android:id="@+id/et_tile"
+            android:textSize="20sp"
+            android:textColor="@color/dark_deep"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:hint="请输入标题"
+            android:textColorHint="@color/gray_normal" />
+        <TextView
+            android:layout_gravity="center_vertical"
+            android:id="@+id/tv_flag"
+            android:layout_width="wrap_content"
+            android:layout_height="22dp"
+            android:background="@drawable/rectangle_tip"
+            android:textSize="14sp"
+            android:text="标签"
+            android:textColor="@color/green"/>
+
+        <ImageView
+            android:id="@+id/img_is_public"
+            android:src="@drawable/img_privacy"
+            android:layout_width="wrap_content"
+            android:layout_height="22dp" />
+    </LinearLayout>
+
+    <View
+        android:layout_marginTop="14dp"
+        android:layout_marginBottom="14dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/div_line"
+        android:background="@color/dark_light">
+
+    </View>
+
+    <EditText
+        android:id="@+id/et_input"
+        android:background="@drawable/rectangle_input"
+        android:gravity="top"
+        android:textSize="20sp"
+        android:textColor="@color/dark_deep"
+        android:hint="请输入内容"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:textColorHint="@color/gray_normal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

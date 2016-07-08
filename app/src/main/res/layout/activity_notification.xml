@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.qjm3662.newproject.myself.settings.Notification">
+    <include layout="@layout/title_bar"/>
+    <TextView
+        android:id="@+id/t1"
+        android:layout_marginTop="19dp"
+        android:layout_marginLeft="13dp"
+        android:textColor="@color/dark_normal"
+        android:text="开启后,他人对你点赞时你将收到通知"
+        android:textSize="11sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:id="@+id/l_is_inform_praise"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line_high">
+        <TextView
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:paddingLeft="13dp"
+            android:text="是否通知赞"
+            android:textColor="@color/dark_deep"
+            android:textSize="@dimen/nickname_size" />
+        <Button
+            android:id="@+id/inform_is_praise_switch"
+            android:background="@drawable/img_switch"
+            android:layout_gravity="center"
+            android:layout_marginRight="20dp"
+            android:layout_width="42dp"
+            android:layout_height="25dp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/t2"
+        android:layout_marginTop="19dp"
+        android:layout_marginLeft="13dp"
+        android:textColor="@color/dark_normal"
+        android:text="开启后,他人对你评论时你将收到通知"
+        android:textSize="11sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:id="@+id/l_is_inform_comment"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line_high">
+        <TextView
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:paddingLeft="13dp"
+            android:text="是否通知评论"
+            android:textColor="@color/dark_deep"
+            android:textSize="@dimen/nickname_size" />
+        <Button
+            android:id="@+id/inform_is_comment_switch"
+            android:background="@drawable/img_switch"
+            android:layout_gravity="center"
+            android:layout_marginRight="20dp"
+            android:layout_width="42dp"
+            android:layout_height="25dp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/t3"
+        android:layout_marginTop="19dp"
+        android:layout_marginLeft="13dp"
+        android:textColor="@color/dark_normal"
+        android:text="开启后,他人收藏你的文章时你将收到通知"
+        android:textSize="11sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:id="@+id/l_is_inform_collect"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line_high">
+        <TextView
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:paddingLeft="13dp"
+            android:text="是否通知收藏"
+            android:textColor="@color/dark_deep"
+            android:textSize="@dimen/nickname_size" />
+        <Button
+            android:id="@+id/inform_is_collect_switch"
+            android:background="@drawable/img_switch"
+            android:layout_gravity="center"
+            android:layout_marginRight="20dp"
+            android:layout_width="42dp"
+            android:layout_height="25dp" />
+    </LinearLayout>
+</LinearLayout>

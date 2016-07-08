@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.qjm3662.newproject.myself.Article.ArticleActivity">
+
+    <include layout="@layout/title_bar" />
+
+    <com.yalantis.phoenix.PullToRefreshView
+        android:id="@+id/pull_to_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ListView
+            android:id="@android:id/list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@color/dark_light"
+            android:dividerHeight="@dimen/div_line">
+
+        </ListView>
+    </com.yalantis.phoenix.PullToRefreshView>
+
+    <TextView
+        android:id="@id/android:empty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Oh on!(ÒωÓױ)！！！"
+        android:textColor="@color/dark_normal"
+        android:textSize="24sp" />
+
+</LinearLayout>

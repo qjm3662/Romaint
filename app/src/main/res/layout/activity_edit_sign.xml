@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".myself.Edit_sign">
+    <include layout="@layout/title_bar"/>
+
+    <EditText
+        android:id="@+id/sign_edit"
+        android:gravity="top"
+        android:padding="5dp"
+        android:background="@drawable/rectangle_title"
+        android:isScrollContainer="true"
+        android:textColor="@color/black"
+        android:hint="什么都没有~~"
+        android:textCursorDrawable="@drawable/color_cursor"
+        android:cursorVisible="true"
+        android:textColorHint="@color/gray_deep"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

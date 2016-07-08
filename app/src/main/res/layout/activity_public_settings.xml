@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.qjm3662.newproject.myself.settings.Public_settings"
+    android:orientation="vertical">
+
+    <include layout="@layout/title_bar"/>
+    <TextView
+        android:id="@+id/t1"
+        android:layout_marginTop="19dp"
+        android:layout_marginLeft="13dp"
+        android:textColor="@color/dark_normal"
+        android:text="公开后你的粉丝他人可见"
+        android:textSize="11sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:id="@+id/l_is_public_fan"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line_high">
+        <TextView
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:paddingLeft="13dp"
+            android:text="是否公开粉丝"
+            android:textColor="@color/dark_deep"
+            android:textSize="@dimen/nickname_size" />
+        <Button
+            android:id="@+id/public_switch_fan"
+            android:background="@drawable/img_switch"
+            android:layout_gravity="center"
+            android:layout_marginRight="20dp"
+            android:layout_width="42dp"
+            android:layout_height="25dp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/t2"
+        android:layout_marginTop="19dp"
+        android:layout_marginLeft="13dp"
+        android:textColor="@color/dark_normal"
+        android:text="公开后你的关注人他人可见"
+        android:textSize="11sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:id="@+id/l_is_public_like"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line_high">
+        <TextView
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:paddingLeft="13dp"
+            android:text="是否公开关注人"
+            android:textColor="@color/dark_deep"
+            android:textSize="@dimen/nickname_size" />
+        <Button
+            android:id="@+id/public_switch_like"
+            android:background="@drawable/img_switch"
+            android:layout_gravity="center"
+            android:layout_marginRight="20dp"
+            android:layout_width="42dp"
+            android:layout_height="25dp" />
+    </LinearLayout>
+</LinearLayout>

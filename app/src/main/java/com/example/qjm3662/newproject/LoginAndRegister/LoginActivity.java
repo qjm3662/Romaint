@@ -19,7 +19,6 @@ import android.widget.Toast;
 import com.example.qjm3662.newproject.Data.Final_Static_data;
 import com.example.qjm3662.newproject.Main_UI.MainActivity;
 import com.example.qjm3662.newproject.NetWorkOperator;
-import com.example.qjm3662.newproject.NetworkReceiver;
 import com.example.qjm3662.newproject.R;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
@@ -38,7 +37,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private EditText et_password;
     private boolean connect_flag = false;
     private ConnectivityManager manager;
-    private NetworkReceiver receiver;
     private Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,9 +95,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         switch(v.getId()){
             case R.id.bar_back:
-                Intent intent = new Intent(context,Register_UI.class);
-                startActivityForResult(intent, Final_Static_data.REQUEST_CODE_LOG_BACK);
-                overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+//                Intent intent = new Intent(context,Register_UI.class);
+//                startActivityForResult(intent, Final_Static_data.REQUEST_CODE_LOG_BACK);
+//                overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
                 finish();
                 break;
             case R.id.login_btn:
@@ -107,6 +105,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 NetWorkOperator.Login(et_username,et_password,connect_flag,context);
                 break;
             case R.id.forget_password:
+                Intent intent = new Intent(context,Register_UI.class);
+                startActivityForResult(intent, Final_Static_data.REQUEST_CODE_LOG_BACK);
+                overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
                 break;
         }
     }
