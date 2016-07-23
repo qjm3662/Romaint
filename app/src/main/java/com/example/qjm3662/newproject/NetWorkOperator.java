@@ -224,7 +224,8 @@ public class NetWorkOperator {
 
                             @Override
                             public void onResponse(String response) {
-                                System.out.println(response);
+
+                                Log.e("更新用户信息回执:",response);
 
                                 try {
                                     JSONObject j = new JSONObject(response);
@@ -235,7 +236,85 @@ public class NetWorkOperator {
                                     }
 
                                     if (j.getBoolean("status")) {
-                                        NetWorkOperator.getUserInfo(context, String.valueOf(User.getInstance().getId()));
+
+                                        Log.e("获取用户信息:", "begin");
+                                        try {
+                                            Log.e("USERINFO", response);
+                                            JSONObject jsonObject = new JSONObject(response);
+                                            JSONObject object = jsonObject.getJSONObject("msg");
+                                            JSONObject user_info = object.getJSONObject("user");
+                                            JSONArray js_array_follower = object.getJSONArray("follower");
+                                            JSONArray js_array_following = object.getJSONArray("following");
+                                            System.out.println(object);
+                                            User user = User.getInstance();
+
+                                            //将用户信息存储到SharePreferences中
+                                            SharedPreferences sp = context.getSharedPreferences("User", Context.MODE_PRIVATE);
+                                            SharedPreferences.Editor editor = sp.edit();
+                                            editor.putString("user_info", jsonObject.getString("msg"));
+                                            editor.apply();
+
+                                            user.setAvatar(user_info.getString(User.USER_AVATAR));
+                                            //user.setCollectedStoriesCount(user_info.getInt(User.USER_COLLECTED_STORIES_COUNT));
+                                            user.setSign(user_info.getString(User.USER_SIGN));
+                                            user.setUserName(user_info.getString(User.USER_USER_NAME));
+                                            user.setSex(user_info.getInt(User.USER_SEX));
+
+
+                                            //获取我关注的和关注我的；
+                                            Gson gson = new Gson();
+                                            List<UserBase> list_user_base = new ArrayList<UserBase>();
+                                            UserBase userBase = null;
+                                            App.Public_Care_Me.clear();
+                                            if(js_array_follower.length() != 0){
+                                                if (!js_array_follower.get(0).toString().equals("false")) {
+                                                    //同步关注我的人信息
+                                                    for (int i = 0; i < js_array_follower.length(); i++) {
+                                                        userBase = gson.fromJson(js_array_follower.get(i).toString(), UserBase.class);
+                                                        System.out.println("有人关注我 ： " + userBase.getId());
+                                                        list_user_base.add(userBase);
+                                                        App.Public_Care_Me.add(userBase);
+                                                    }
+                                                    if (list_user_base.size() != 0) {
+                                                        user.setFollower(list_user_base);
+                                                    }
+                                                }
+                                            }
+
+                                            list_user_base.clear();
+                                            App.Public_Care_Other.clear();
+                                            //同步我关注的人信息
+                                            if(js_array_following.length() != 0){
+                                                if (!js_array_following.get(0).toString().equals("false")) {
+                                                    for (int i = 0; i < js_array_following.length(); i++) {
+                                                        userBase = gson.fromJson(js_array_following.get(i).toString(), UserBase.class);
+                                                        System.out.println("我在关注TA ： " + userBase.getId());
+                                                        list_user_base.add(userBase);
+                                                        App.Public_Care_Other.add(userBase);
+                                                        System.out.println(js_array_following);
+                                                    }
+
+                                                    if (list_user_base.size() != 0) {
+                                                        user.setFollowing(list_user_base);
+                                                    }
+                                                }
+                                            }
+
+                                            list_user_base.clear();
+
+                                            //同步收藏文章数目
+                                            user.setCollectedStoriesCount(object.getInt("collectedStoriesCount"));
+
+                                            //获取自己上传的文章
+                                            Get_Person_Story_List(context,String.valueOf(user.getId()), 2, 1);
+
+                                            Intent intent = new Intent();
+                                            intent.setAction("GET_INFO");
+                                            context.sendBroadcast(intent);//传递过去
+
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
                                     }
                                 } catch (JSONException e) {
                                     e.printStackTrace();
@@ -306,7 +385,7 @@ public class NetWorkOperator {
                                                             story.setUser(App.Public_Story_User.get(i + length_before));
                                                             if (!App.Public_StoryList.contains(story)) {
                                                                 App.Public_StoryList.add(story);
-                                                                //Log.e("Story",story.toString());
+                                                                Log.e("Story",story.toString());
                                                             }
                                                         } catch (JSONException e) {
                                                             e.printStackTrace();
@@ -344,6 +423,7 @@ public class NetWorkOperator {
      * @param handler
      */
     public static void GET_USER_INFORMATION_BY_ID(final JSONArray jsonArray, final Handler handler) {
+
         //用来标识用户信息返回的个数（每调用一次onResponse（），++）
         final int[] flag_if_over = {0};
         //暂时存储用户ID
@@ -673,14 +753,6 @@ public class NetWorkOperator {
                                     editor.apply();
 
                                     Login(et_phone_number, et_password, true, context);
-//                                    Tool.str_to_user(null, String.valueOf(object));
-//
-//                                    App.getUserInfo(context);
-//                                    System.out.println( "User Id : " + String.valueOf(User.getInstance().getId()));
-//                                    getUserInfo(context, String.valueOf(User.getInstance().getId()));
-//                                    context.startActivity(new Intent(context, MainActivity.class));
-//                                    ((Activity) context).overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-//                                    ((Activity) context).finish();
 
                                 } else {
                                     System.out.println("Callback error");
@@ -715,9 +787,9 @@ public class NetWorkOperator {
             }
         };
         if (url.equals("111")) {
-            img_avatar.setImageResource(R.mipmap.ic_launcher);
+            img_avatar.setImageResource(R.drawable.img_defaultavatar);
         } else {
-            System.out.println(url);
+            System.out.println("setAvatar : " + url);
             new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -725,7 +797,7 @@ public class NetWorkOperator {
                     if (bitmap[0] != null) {
                         handler.sendEmptyMessage(0);
                     } else {
-                        img_avatar.setImageResource(R.mipmap.ic_launcher);
+                        handler.sendEmptyMessage(1);
                     }
                 }
             }).start();
@@ -760,10 +832,17 @@ public class NetWorkOperator {
 
                                 @Override
                                 public void onResponse(String response) {
-                                    try {
 
+
+                                    try {
                                         Log.e("USERINFO", response);
                                         JSONObject jsonObject = new JSONObject(response);
+                                        //如果登陆失效则重新获取Token,再次执行该函数
+                                        if (jsonObject.getString("msg").equals("LoginToken")) {
+                                            getNew_Token(User.getInstance().getToken());
+                                            getUserInfo(context,id);
+                                        }
+
                                         JSONObject object = jsonObject.getJSONObject("msg");
                                         JSONObject user_info = object.getJSONObject("user");
                                         JSONArray js_array_follower = object.getJSONArray("follower");
@@ -788,6 +867,7 @@ public class NetWorkOperator {
                                         Gson gson = new Gson();
                                         List<UserBase> list_user_base = new ArrayList<UserBase>();
                                         UserBase userBase = null;
+                                        App.Public_Care_Me.clear();
                                         if(js_array_follower.length() != 0){
                                             if (!js_array_follower.get(0).toString().equals("false")) {
                                                 //同步关注我的人信息
@@ -805,6 +885,7 @@ public class NetWorkOperator {
 
                                         list_user_base.clear();
 
+                                        App.Public_Care_Other.clear();
                                         //同步我关注的人信息
                                         if(js_array_following.length() != 0){
                                             if (!js_array_following.get(0).toString().equals("false")) {

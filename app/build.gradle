@@ -4,6 +4,12 @@ android {
     compileSdkVersion 23
     buildToolsVersion "24.0.0"
 
+    sourceSets {
+        main {
+            jniLibs.srcDirs 'src/main/jniLibs'
+        }
+
+    }
     defaultConfig {
         //包名
         applicationId "com.example.qjm3662.newproject"
@@ -21,6 +27,7 @@ android {
             }
         }
     }
+
 
     dependencies {
         compile fileTree(dir: 'libs', include: ['*.jar'])
@@ -44,4 +51,5 @@ android {
 dependencies {
     compile 'com.netflix.feign:feign-gson:8.17.0'
     compile 'com.android.support:support-v4:23.2.0'
+    compile files('E:/Romaint/libs/jpush-android-2.1.7.jar')
 }

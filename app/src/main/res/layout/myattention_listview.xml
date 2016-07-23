@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:background="@color/blue_light"
+    android:background="?attr/user_info_item"
     >
     <ImageView
         android:id="@+id/myattention_listview_img"
@@ -14,7 +14,7 @@
         android:layout_width="46dp"
         android:layout_height="46dp"/>
     <TextView
-        android:textColor="@color/black"
+        android:textColor="?attr/textColorDeep"
         android:id="@+id/myattention_listview_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

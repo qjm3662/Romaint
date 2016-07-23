@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -23,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.qjm3662.newproject.App;
+import com.example.qjm3662.newproject.ChangeModeBroadCastReceiver;
 import com.example.qjm3662.newproject.Data.Story;
 import com.example.qjm3662.newproject.Data.StoryDB;
 import com.example.qjm3662.newproject.R;
@@ -65,9 +67,22 @@ public class Edit_Acticity extends Activity implements View.OnClickListener {
     private LinearLayout bar;
 
 
+    private ChangeModeBroadCastReceiver receiver;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (App.Switch_state_mode) {
+            this.setTheme(R.style.AppTheme_night);
+        } else {
+            this.setTheme(R.style.AppTheme_day);
+        }
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("CHANGE_MODE");
+        receiver = new ChangeModeBroadCastReceiver(this);
+        registerReceiver(receiver, intentFilter);
+
+
         setContentView(R.layout.activity_edit__acticity);
         init();
 
@@ -99,6 +114,12 @@ public class Edit_Acticity extends Activity implements View.OnClickListener {
 
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(receiver);
+    }
+
 
     /**
      * 显示函数，将list、index_list和content组合显示出图文混排
@@ -113,7 +134,7 @@ public class Edit_Acticity extends Activity implements View.OnClickListener {
                     Bitmap bm = BitmapFactory.decodeFile(path);
                     float multiple = (float) width / (float) bm.getWidth();
                     bm = Tool.resize_bitmap(bm, width - 80, multiple * bm.getHeight() - 80);
-                    Tool.insertPic(bm, path,Edit_Acticity.this,et_input);
+                    Tool.insertPic(bm, path, Edit_Acticity.this, et_input);
                 }
             }
             if (i == 0) {
@@ -170,28 +191,28 @@ public class Edit_Acticity extends Activity implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.img_isPublic:
                 change();
                 break;
             case R.id.cancel:
                 finish();
-                overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 break;
             case R.id.save:
                 //先将内容保存，并更新主页面的数据
                 save_story();
                 StoryFragment.refreshStoryListView();
                 finish();
-                overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 break;
 
             //隐藏标题栏操作
             case R.id.tv_hide_title:
-                if(b == 0){
+                if (b == 0) {
                     et_title.setVisibility(View.GONE);
                     b = 1;
-                }else{
+                } else {
                     et_title.setVisibility(View.VISIBLE);
                     b = 0;
                 }
@@ -200,10 +221,10 @@ public class Edit_Acticity extends Activity implements View.OnClickListener {
     }
 
     private void change() {
-        if(a == 0){
+        if (a == 0) {
             img_isPublic.setImageResource(R.drawable.img_public);
             a = 1;
-        }else{
+        } else {
             img_isPublic.setImageResource(R.drawable.img_privacy);
             a = 0;
         }
@@ -225,8 +246,8 @@ public class Edit_Acticity extends Activity implements View.OnClickListener {
             try {
                 Bitmap bm = BitmapFactory.decodeStream(resolver.openInputStream(originalUri));
                 if (bm != null) {
-                    float multiple = (float)width/(float)bm.getWidth();
-                    bm = Tool.resize_bitmap(bm,width-80,multiple*bm.getHeight()-80);
+                    float multiple = (float) width / (float) bm.getWidth();
+                    bm = Tool.resize_bitmap(bm, width - 80, multiple * bm.getHeight() - 80);
                     insertPic(bm, originalUri);
                 } else {
                     Toast.makeText(Edit_Acticity.this, "获取图片失败",
@@ -242,6 +263,7 @@ public class Edit_Acticity extends Activity implements View.OnClickListener {
 
     /**
      * 根据URI插入图片
+     *
      * @param bitmap
      * @param uri
      */
@@ -253,7 +275,7 @@ public class Edit_Acticity extends Activity implements View.OnClickListener {
 
         // 创建一个SpannableString对象，以便插入用ImageSpan对象封装的图像
         //System.out.println(Tool.getPath(this,uri));
-        String path = Tool.getPath(this,uri);
+        String path = Tool.getPath(this, uri);
         //<img alt="" src="1.jpg"></img>
         path = "<img" + path + "></img>";
 
@@ -285,28 +307,29 @@ public class Edit_Acticity extends Activity implements View.OnClickListener {
 
     /**
      * 解析字符串函数
-     *
+     * <p>
      * 解析字符串内容，将其中包含的图片路径存到list中
-     *每个图片的前后索引值存在index_list中
-     * @param  content
+     * 每个图片的前后索引值存在index_list中
+     *
+     * @param content
      */
-    public void getImg_Src(String content){
+    public void getImg_Src(String content) {
         list = new ArrayList<String>();
         int index_pre = content.indexOf("<img");
         int index_next = 0;
         index_int.clear();
-        while(content.indexOf("<img",index_next) != -1){
+        while (content.indexOf("<img", index_next) != -1) {
 
-            index_pre = content.indexOf("<img",index_next);
+            index_pre = content.indexOf("<img", index_next);
             //图片标签索引的前值添加进index_int
             index_int.add(index_pre);
 
-            index_next = content.indexOf("</img>",index_pre);
+            index_next = content.indexOf("</img>", index_pre);
             //图片标签索引的后值添加进index_int
             index_int.add(index_next + 6);
 
             //将包含的路径放到list中
-            list.add(content.substring(index_pre + 4,index_next-1));
+            list.add(content.substring(index_pre + 4, index_next - 1));
         }
 
         System.out.println("getImg_Src== " + list.toString());
@@ -329,28 +352,28 @@ public class Edit_Acticity extends Activity implements View.OnClickListener {
      * 保存故事函数（保存到数据库中）
      * 存在则更新，不存在则插入
      */
-    private void save_story(){
+    private void save_story() {
         ContentValues cv = new ContentValues();
         //获取当前时间
         date = getDate();
         System.out.println("Date : ======>" + date);
-        cv.put(StoryDB.COLUMN_NAME_TITLE,et_title.getText().toString());
+        cv.put(StoryDB.COLUMN_NAME_TITLE, et_title.getText().toString());
         cv.put(StoryDB.COLUMN_NAME_CONTENT, et_input.getText().toString());
-        cv.put(StoryDB.COLUMN_NAME_PUBLIC_ENABLE,a == 0);
+        cv.put(StoryDB.COLUMN_NAME_PUBLIC_ENABLE, a == 0);
         cv.put(StoryDB.COLUMN_NAME_CREATE_AT, String.valueOf(date));
         Story story;
-        System.out.println(JUDGE + String.valueOf(getIntent().getIntExtra("ID", 1)+""));
-        if (JUDGE){
+        System.out.println(JUDGE + String.valueOf(getIntent().getIntExtra("ID", 1) + ""));
+        if (JUDGE) {
             App.dbWrite.update(StoryDB.TABLE_NAME_STORY, cv, StoryDB.COLUMN_NAME_ID + "=?", new String[]{String.valueOf(getIntent().getIntExtra("ID", 1))
             });
-            story = App.StoryList.get(getIntent().getIntExtra("position",-1));
+            story = App.StoryList.get(getIntent().getIntExtra("position", -1));
             story.setTitle(et_title.getText().toString());
             story.setContent(et_input.getText().toString());
             story.setCreatedAt(String.valueOf(date));
-            System.out.println(getIntent().getIntExtra("position",-1));
-            App.StoryList.set(getIntent().getIntExtra("position",-1),story);
+            System.out.println(getIntent().getIntExtra("position", -1));
+            App.StoryList.set(getIntent().getIntExtra("position", -1), story);
             System.out.println("update success");
-        }else{
+        } else {
             story = new Story();
             story.setTitle(et_title.getText().toString());
             story.setContent(et_input.getText().toString());

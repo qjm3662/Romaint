@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.qjm3662.newproject.App;
+import com.example.qjm3662.newproject.ChangeModeBroadCastReceiver;
 import com.example.qjm3662.newproject.Data.User;
 import com.example.qjm3662.newproject.Data.UserBase;
 import com.example.qjm3662.newproject.NetWorkOperator;
@@ -25,6 +27,7 @@ public class HomePage extends ListActivity implements View.OnClickListener {
     private Intent intent;
     private UserBase userBase;
     private int position;
+    private int flag;       //用来标记来源
 
     private ImageView img_bar_left;
     private ImageView img_bar_right;
@@ -43,10 +46,22 @@ public class HomePage extends ListActivity implements View.OnClickListener {
     public static PullToRefreshView mPullToRefreshView;
     private long REFRESH_DELAY = 1000;
     private Context context;
+    private ChangeModeBroadCastReceiver receiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (App.Switch_state_mode) {
+            this.setTheme(R.style.AppTheme_night);
+        } else {
+            this.setTheme(R.style.AppTheme_day);
+        }
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("CHANGE_MODE");
+        receiver = new ChangeModeBroadCastReceiver(this);
+        registerReceiver(receiver, intentFilter);
+
+
         setContentView(R.layout.activity_home_page);
         initView();
         adapter = new HomePage_story_adapter(this);
@@ -54,8 +69,15 @@ public class HomePage extends ListActivity implements View.OnClickListener {
         context = this;
 
         intent = getIntent();
-        position = intent.getIntExtra("position", 0);
-        userBase = App.Public_Story_User.get(position);
+            position = intent.getIntExtra("position", 0);
+        flag = intent.getIntExtra("FLAG_WHERE", 0);
+        if(flag == 0){  //自故事页面跳转
+            userBase = App.Public_Story_User.get(position);
+        }else if(flag == 1){          //自关注页面跳转
+            userBase = App.Public_Care_Other.get(position);
+        }else if(flag == 2){          //自被关注页面跳转
+            userBase = App.Public_Care_Me.get(position);
+        }
         mPullToRefreshView = (PullToRefreshView) findViewById(R.id.pull_to_refresh);
         mPullToRefreshView.setOnRefreshListener(new PullToRefreshView.OnRefreshListener() {
             @Override
@@ -69,6 +91,12 @@ public class HomePage extends ListActivity implements View.OnClickListener {
 
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(receiver);
+    }
+
     private void fillInformation() {
         //加载头像
         final String url = userBase.getAvatar();
@@ -77,9 +105,9 @@ public class HomePage extends ListActivity implements View.OnClickListener {
         tv_nickname.setText(userBase.getUserName());
         tv_sign.setText(userBase.getSign());
         tv_bar_center.setText(userBase.getUserName() + "的主页");
-        if(userBase.getSex() == 1){
+        if (userBase.getSex() == 1) {
             img_sex.setImageResource(R.drawable.img_male_mine);
-        }else{
+        } else {
             img_sex.setImageResource(R.drawable.img_female_mine);
         }
     }
@@ -100,7 +128,7 @@ public class HomePage extends ListActivity implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.cloud_imageView_story:
                 onBackPressed();
                 break;
@@ -159,6 +187,7 @@ public class HomePage extends ListActivity implements View.OnClickListener {
         intent.putExtra("position", position);
         intent.putExtra("position_child", p);
         intent.putExtra("flag", 1);
+        intent.putExtra("FLAG_WHERE", flag);
         startActivity(intent);
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }

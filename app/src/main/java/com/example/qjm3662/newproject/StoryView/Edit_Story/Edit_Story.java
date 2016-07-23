@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -23,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.qjm3662.newproject.App;
+import com.example.qjm3662.newproject.ChangeModeBroadCastReceiver;
 import com.example.qjm3662.newproject.Data.Story;
 import com.example.qjm3662.newproject.Data.StoryBean;
 import com.example.qjm3662.newproject.Data.StoryDB;
@@ -37,7 +39,9 @@ import com.example.qjm3662.newproject.myself.MyDialog;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.TimeZone;
 
 public class Edit_Story extends Activity implements View.OnClickListener {
 
@@ -75,23 +79,40 @@ public class Edit_Story extends Activity implements View.OnClickListener {
     private Date date = null;
     private StoryBean story;
 
+    //时间操作
+    private SimpleDateFormat sdr = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+
+    private ChangeModeBroadCastReceiver receiver;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (App.Switch_state_mode) {
+            this.setTheme(R.style.AppTheme_night);
+        } else {
+            this.setTheme(R.style.AppTheme_day);
+        }
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("CHANGE_MODE");
+        receiver = new ChangeModeBroadCastReceiver(this);
+        registerReceiver(receiver, intentFilter);
         setContentView(R.layout.activity_edit__story);
         init();
         intent = getIntent();
         JUDGE = intent.getBooleanExtra("JUDGE", false);
         flag = intent.getIntExtra(FLAG_WHERE_ARE_YOU_FROM, 0);
 
+        sdr.setTimeZone(TimeZone.getTimeZone("GMT+8"));// 中国北京时间，东八区
+
         //获得EditText的编辑器
         edit_text = et_input.getEditableText();
         //判断是新建还是编辑，false则为新建
         if (JUDGE) {
             position = intent.getIntExtra("position", 0);
-            if(flag == FLAG_FROM_ONLINE_ARTICLE){   //自己上传的文章
+            if (flag == FLAG_FROM_ONLINE_ARTICLE) {   //自己上传的文章
                 story = App.Public_My_Article_StoryList.get(position);
-            }else{      //自己本地的文章
+            } else {      //自己本地的文章
                 story = App.StoryList.get(position);
             }
             et_title.setText(story.getTitle());
@@ -116,6 +137,12 @@ public class Edit_Story extends Activity implements View.OnClickListener {
             save_story();
             judge = false;
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(receiver);
     }
 
     private void init() {
@@ -155,22 +182,22 @@ public class Edit_Story extends Activity implements View.OnClickListener {
                 String content1 = null;
                 if (JUDGE) {
                     content1 = story.getFlags();
-                }else if(!tv_flag.getText().toString().equals("标签")){
+                } else if (!tv_flag.getText().toString().equals("标签")) {
                     content1 = tv_flag.getText().toString();
                 }
                 ShowDialog(content1, "编辑标签", 0);
                 break;
             case R.id.img_tick:
-                if(flag == 1){      //更新修改已上传的文章
+                if (flag == 1) {      //更新修改已上传的文章
                     System.out.println("FLAG_FROM_ONLINE_ARTICLE == 1");
-                }else{
-                    if(JUDGE){
+                } else {
+                    if (JUDGE) {
                         //先将内容保存，并更新主页面的数据
                         save_story();
                         StoryFragment.refreshStoryListView();
                         finish();
-                        overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
-                    }else{
+                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                    } else {
                         ShowDialog(null, null, 1);
                     }
                 }
@@ -193,10 +220,10 @@ public class Edit_Story extends Activity implements View.OnClickListener {
         myDialog.setClickListener(new MyDialog.ClickListenerInterface() {
             @Override
             public void doConfirm() {
-                if(flag == 0){
+                if (flag == 0) {
                     tv_flag.setText(myDialog.getDialog_et().getText().toString());
                     tv_flag.setVisibility(View.VISIBLE);
-                }else{
+                } else {
                     img_is_public.setImageResource(R.drawable.img_public);
                     img_is_public.setVisibility(View.VISIBLE);
                     a = 1;
@@ -204,14 +231,14 @@ public class Edit_Story extends Activity implements View.OnClickListener {
                     save_story();
                     StoryFragment.refreshStoryListView();
                     finish();
-                    overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 }
                 myDialog.dismiss();
             }
 
             @Override
             public void doCancel() {
-                if(flag != 0){
+                if (flag != 0) {
                     img_is_public.setImageResource(R.drawable.img_privacy);
                     img_is_public.setVisibility(View.VISIBLE);
                     a = 0;
@@ -219,7 +246,7 @@ public class Edit_Story extends Activity implements View.OnClickListener {
                     save_story();
                     StoryFragment.refreshStoryListView();
                     finish();
-                    overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 }
                 myDialog.dismiss();
             }
@@ -312,7 +339,7 @@ public class Edit_Story extends Activity implements View.OnClickListener {
 
     /**
      * 解析字符串函数
-     * <p/>
+     * <p>
      * 解析字符串内容，将其中包含的图片路径存到list中
      * 每个图片的前后索引值存在index_list中
      *
@@ -365,11 +392,11 @@ public class Edit_Story extends Activity implements View.OnClickListener {
         cv.put(StoryDB.COLUMN_NAME_TITLE, et_title.getText().toString());
         cv.put(StoryDB.COLUMN_NAME_CONTENT, et_input.getText().toString());
         cv.put(StoryDB.COLUMN_NAME_PUBLIC_ENABLE, a);
-        cv.put(StoryDB.COLUMN_NAME_CREATE_AT, String.valueOf(date));
+        cv.put(StoryDB.COLUMN_NAME_CREATE_AT, sdr.format(date));
         cv.put(StoryDB.COLUMN_NAME_FLAGS, tv_flag.getText().toString());
         Story story;
         System.out.println(JUDGE + String.valueOf(getIntent().getIntExtra("ID", 1) + ""));
-        if(!App.dbWrite.isOpen()){
+        if (!App.dbWrite.isOpen()) {
             System.out.println("WTF, 谁把你关了");
             App.openDB();
         }
@@ -380,7 +407,7 @@ public class Edit_Story extends Activity implements View.OnClickListener {
             story = App.StoryList.get(getIntent().getIntExtra("position", -1));
             story.setTitle(et_title.getText().toString());
             story.setContent(et_input.getText().toString());
-            story.setCreatedAt(String.valueOf(date));
+            story.setCreatedAt(sdr.format(date));
             story.setPublicEnable(a);
             story.setFlags(tv_flag.getText().toString());
 
@@ -391,7 +418,7 @@ public class Edit_Story extends Activity implements View.OnClickListener {
             story = new Story();
             story.setTitle(et_title.getText().toString());
             story.setContent(et_input.getText().toString());
-            story.setCreatedAt(String.valueOf(date));
+            story.setCreatedAt(sdr.format(date));
             story.setPublicEnable(a);
             story.setFlags(tv_flag.getText().toString());
             App.dbWrite.insert(StoryDB.TABLE_NAME_STORY, null, cv);

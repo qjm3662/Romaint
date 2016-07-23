@@ -3,6 +3,7 @@ package com.example.qjm3662.newproject.LoginAndRegister;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -10,6 +11,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.qjm3662.newproject.App;
+import com.example.qjm3662.newproject.ChangeModeBroadCastReceiver;
 import com.example.qjm3662.newproject.Data.Final_Static_data;
 import com.example.qjm3662.newproject.Main_UI.MainActivity;
 import com.example.qjm3662.newproject.NetWorkOperator;
@@ -31,9 +34,21 @@ public class Register_UI extends Activity implements View.OnClickListener {
     private EditText et_password;
     private Context context;
 
+    private ChangeModeBroadCastReceiver receiver;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(App.Switch_state_mode){
+            this.setTheme(R.style.AppTheme_night);
+        }else {
+            this.setTheme(R.style.AppTheme_day);
+        }
+
+        receiver = new ChangeModeBroadCastReceiver(this);
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("CHANGE_MODE");
+        registerReceiver(receiver, intentFilter);
+
         setContentView(R.layout.activity_register__ui);
         context = Register_UI.this;
 
@@ -46,6 +61,13 @@ public class Register_UI extends Activity implements View.OnClickListener {
         btn_register.setOnClickListener(this);
 
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(receiver);
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()){

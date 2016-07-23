@@ -21,6 +21,8 @@ import com.example.qjm3662.newproject.StoryView.Slide.SlideAdapter;
 
 import java.sql.Date;
 
+import cn.jpush.android.api.JPushInterface;
+
 
 public class StoryFragment extends Fragment implements OnItemClickListener, View.OnClickListener, AdapterView.OnItemLongClickListener {
 	
@@ -83,6 +85,7 @@ public class StoryFragment extends Fragment implements OnItemClickListener, View
 				startActivityForResult(new Intent(view.getContext(),Edit_Story.class),5);
 				break;
 			case R.id.cloud_imageView_story:
+
 		}
 	}
 

@@ -15,7 +15,7 @@ public class Final_Static_data {
     //服务器地址
     public static final String NET_HOST = "http://139.129.131.240";
     //端口号
-    public static final String NET_PORT = "3000";
+    public static final String NET_PORT = "3030";
 
     //登陆
     public static final String URL_LOGIN = NET_HOST + ":" + NET_PORT + "/api/login";
@@ -51,4 +51,9 @@ public class Final_Static_data {
     //上传头像
     public static final String UP_FILE = NET_HOST + ":" + NET_PORT + "/upload";
 
+    //给文章发表评论
+    public static final String GIVE_COMMENT = NET_HOST + ":" + NET_PORT + "/api/token/comment/";/*<storyID>*/
+
+    //获得评论列表
+    public static final String GET_COMMENT_LIST = NET_HOST + ":" + NET_PORT + "/api/token/commentlist/";/*<storyID>*/
 }

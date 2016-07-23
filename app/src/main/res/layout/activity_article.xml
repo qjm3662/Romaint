@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="?attr/mainBackground"
     tools:context="com.example.qjm3662.newproject.myself.Article.ArticleActivity">
 
     <include layout="@layout/title_bar" />
@@ -14,6 +15,7 @@
         android:layout_height="match_parent">
 
         <ListView
+            android:background="?attr/ListViewBackground"
             android:id="@android:id/list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -24,12 +26,13 @@
     </com.yalantis.phoenix.PullToRefreshView>
 
     <TextView
+
         android:id="@id/android:empty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="Oh on!(ÒωÓױ)！！！"
-        android:textColor="@color/dark_normal"
+        android:textColor="?attr/textColorLight"
         android:textSize="24sp" />
 
 </LinearLayout>

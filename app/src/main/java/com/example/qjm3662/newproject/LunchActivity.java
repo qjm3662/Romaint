@@ -3,16 +3,33 @@ package com.example.qjm3662.newproject;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.widget.TimePicker;
+
 import com.example.qjm3662.newproject.Main_UI.MainActivity;
 import com.example.qjm3662.newproject.Tool.Titanic;
 import com.example.qjm3662.newproject.Tool.TitanicTextView;
+
+import cn.jpush.android.api.JPushInterface;
+import cn.jpush.android.data.JPushView;
 
 public class LunchActivity extends Activity {
 
     private Context context;
     private Titanic titanic;
+
+    @Override
+    protected void onResume() {
+        JPushInterface.onResume(this);
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        JPushInterface.onPause(this);
+        super.onPause();
+    }
 
     @Override
     protected void onStart() {
@@ -26,6 +43,15 @@ public class LunchActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        if (App.Switch_state_mode) {
+//            this.setTheme(R.style.AppTheme_night);
+//        } else {
+//            this.setTheme(R.style.AppTheme_day);
+//        }
+//        IntentFilter intentFilter = new IntentFilter();
+//        intentFilter.addAction("CHANGE_MODE");
+//        receiver = new ChangeModeBroadCastReceiver(this);
+//        registerReceiver(receiver, intentFilter);
         setContentView(R.layout.activity_lunch);
 
 
@@ -39,6 +65,6 @@ public class LunchActivity extends Activity {
                 finish();
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             }
-        },3000);
+        }, 3000);
     }
 }

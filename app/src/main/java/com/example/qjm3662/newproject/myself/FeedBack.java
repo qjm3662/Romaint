@@ -1,12 +1,15 @@
 package com.example.qjm3662.newproject.myself;
 
 import android.app.Activity;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.qjm3662.newproject.App;
+import com.example.qjm3662.newproject.ChangeModeBroadCastReceiver;
 import com.example.qjm3662.newproject.Data.User;
 import com.example.qjm3662.newproject.NetWorkOperator;
 import com.example.qjm3662.newproject.R;
@@ -19,9 +22,22 @@ public class FeedBack extends Activity implements View.OnClickListener {
     private EditText et_sign;
     private TextView tv_bat_right;
 
+    private ChangeModeBroadCastReceiver receiver;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (App.Switch_state_mode) {
+            this.setTheme(R.style.AppTheme_night);
+        } else {
+            this.setTheme(R.style.AppTheme_day);
+        }
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("CHANGE_MODE");
+        receiver = new ChangeModeBroadCastReceiver(this);
+        registerReceiver(receiver, intentFilter);
+
+
         setContentView(R.layout.activity_edit_sign);
         img_bar_left = (ImageView) findViewById(R.id.cloud_imageView_story);
         img_bar_right = (ImageView) findViewById(R.id.add_imageView_story);
@@ -40,16 +56,22 @@ public class FeedBack extends Activity implements View.OnClickListener {
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(receiver);
+    }
+
+    @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.cloud_imageView_story:
                 finish();
-                overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 break;
             case R.id.tv_bar_right_text:
                 NetWorkOperator.getUserInfo(this, String.valueOf(User.getInstance().getId()));
                 finish();
-                overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 break;
         }
     }

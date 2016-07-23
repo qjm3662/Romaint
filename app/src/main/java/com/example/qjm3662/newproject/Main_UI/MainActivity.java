@@ -1,6 +1,7 @@
 package com.example.qjm3662.newproject.Main_UI;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -12,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.qjm3662.newproject.App;
+import com.example.qjm3662.newproject.ChangeModeBroadCastReceiver;
 import com.example.qjm3662.newproject.Finding.Finding_fragment;
 import com.example.qjm3662.newproject.Message.MessageFragment;
 import com.example.qjm3662.newproject.R;
@@ -36,10 +38,21 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
     private ImageView img_bar_right;
     private TextView tv_bar_center;
     private TextView tv_bar_right;
+    private ChangeModeBroadCastReceiver receiver;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+        if (App.Switch_state_mode) {
+            this.setTheme(R.style.AppTheme_night);
+        } else {
+            this.setTheme(R.style.AppTheme_day);
+        }
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("CHANGE_MODE");
+        receiver = new ChangeModeBroadCastReceiver(this);
+        registerReceiver(receiver, intentFilter);
         setContentView(R.layout.activity_main);
 
         img_bar_left = (ImageView) findViewById(R.id.cloud_imageView_story);
@@ -57,6 +70,9 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
         App.getSwitchInfo(this);
     }
 
+
+
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -67,20 +83,35 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
                 setTab_selection(0);
                 break;
             case R.id.find:
-                img_bar_left.setImageResource(R.color.green);
-                img_bar_right.setImageResource(R.color.green);
+                if(!App.Switch_state_mode){
+                    img_bar_left.setImageResource(R.color.green);
+                    img_bar_right.setImageResource(R.color.green);
+                }else{
+                    img_bar_left.setImageResource(R.color.night_light);
+                    img_bar_right.setImageResource(R.color.night_light);
+                }
                 tv_bar_center.setText("发现");
                 setTab_selection(1);
                 break;
             case R.id.message:
-                img_bar_left.setImageResource(R.color.green);
-                img_bar_right.setImageResource(R.color.green);
+                if(!App.Switch_state_mode){
+                    img_bar_left.setImageResource(R.color.green);
+                    img_bar_right.setImageResource(R.color.green);
+                }else{
+                    img_bar_left.setImageResource(R.color.night_light);
+                    img_bar_right.setImageResource(R.color.night_light);
+                };
                 tv_bar_center.setText("信息");
                 setTab_selection(2);
                 break;
             case R.id.my:
-                img_bar_left.setImageResource(R.color.green);
-                img_bar_right.setImageResource(R.color.green);
+                if(!App.Switch_state_mode){
+                    img_bar_left.setImageResource(R.color.green);
+                    img_bar_right.setImageResource(R.color.green);
+                }else{
+                    img_bar_left.setImageResource(R.color.night_light);
+                    img_bar_right.setImageResource(R.color.night_light);
+                }
                 tv_bar_center.setText("我");
                 setTab_selection(3);
                 break;
@@ -89,10 +120,17 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 
 
     private void clearSelection() {
-        story.setImageResource(R.drawable.img_story);
-        find.setImageResource(R.drawable.img_findings);
-        message.setImageResource(R.drawable.img_message);
-        my.setImageResource(R.drawable.img_my);
+        if(App.Switch_state_mode){
+            story.setImageResource(R.drawable.img_story_night);
+            find.setImageResource(R.drawable.img_finding_night);
+            message.setImageResource(R.drawable.img_message_night);
+            my.setImageResource(R.drawable.img_my_night);
+        }else{
+            story.setImageResource(R.drawable.img_story);
+            find.setImageResource(R.drawable.img_findings);
+            message.setImageResource(R.drawable.img_message);
+            my.setImageResource(R.drawable.img_my);
+        }
     }
 
     private void hideFragments(FragmentTransaction transaction) {
@@ -169,6 +207,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
         super.onDestroy();
         App.dbWrite.close();
         App.dbRead.close();
+        unregisterReceiver(receiver);
     }
 
 

@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:background="@color/gray_light"
+    android:background="?attr/mainBackground"
     android:layout_height="match_parent">
     <ImageView
         android:id="@+id/register_img"
@@ -21,7 +21,7 @@
         android:layout_height="@dimen/div_line" />
     <EditText
         android:id="@+id/register_phone"
-        android:background="#ffffff"
+        android:background="?attr/loginEditText"
         android:hint="@string/phone_number"
         android:paddingLeft="34dp"
         android:inputType="number"
@@ -35,7 +35,7 @@
         android:layout_height="@dimen/div_line" />
     <EditText
         android:id="@+id/register_password"
-        android:background="#ffffff"
+        android:background="?attr/loginEditText"
         android:hint="@string/input_password"
         android:paddingLeft="34dp"
         android:inputType="textPassword"
@@ -51,6 +51,7 @@
     <Button
         android:id="@+id/register_btn"
         android:layout_marginTop="45dp"
+        android:textColor="@color/white"
         android:gravity="center"
         android:background="@drawable/button_bg"
         android:textSize="24sp"

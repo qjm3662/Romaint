@@ -11,6 +11,6 @@
     <dimen name="lind_right">34dp</dimen>
     <dimen name="div_line">0.33dp</dimen>
     <dimen name="bar_high">48dp</dimen>
-    <dimen name="ts_large" format="float" >16.67sp</dimen>
-    <dimen name="ts_small" format="float" >13.3sp</dimen>
+    <dimen name="ts_large" format="float">16.67sp</dimen>
+    <dimen name="ts_small" format="float">13.3sp</dimen>
 </resources>

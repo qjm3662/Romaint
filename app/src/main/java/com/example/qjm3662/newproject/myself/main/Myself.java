@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -262,7 +263,7 @@ public class Myself extends Fragment implements View.OnClickListener {
                 break;
             case R.id.my_care_me:
                 Intent intent_care_me = new Intent(context, care.class);
-                intent_care_me.addFlags(0);
+                intent_care_me.addFlags(2);
                 startActivity(intent_care_me);
                 ((Activity) context).overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 break;
@@ -312,17 +313,36 @@ public class Myself extends Fragment implements View.OnClickListener {
                 }
                 break;
             case R.id.my_switch_button:
-                if (App.Switch_state_mode) {
-                    switch_button.setBackgroundResource(R.drawable.img_switch);
-                    App.Switch_state_mode = false;
-                } else {
-                    switch_button.setBackgroundResource(R.drawable.img_switch_choose);
-                    App.Switch_state_mode = true;
-                }
+                changeTheme();
                 App.updateSwitchInfo(getContext());
                 break;
         }
     }
+
+
+    private void changeTheme(){
+
+        System.out.println("STATE1 : " + App.Switch_state_mode);
+        if(App.Switch_state_mode){
+            switch_button.setBackgroundResource(R.drawable.img_switch);
+            context.setTheme(R.style.AppTheme_day);
+            App.Switch_state_mode = false;
+        }else{
+            context.setTheme(R.style.AppTheme_night);
+            switch_button.setBackgroundResource(R.drawable.img_switch_choose);
+            App.Switch_state_mode = true;
+        }
+        System.out.println("STATE2 : " + App.Switch_state_mode);
+
+        Intent intent = new Intent();
+        intent.setAction("CHANGE_MODE");
+        getActivity().sendBroadcast(intent);
+        getActivity().finish();
+        startActivity(new Intent(getActivity(), getActivity().getClass()));
+        getActivity().overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+
+    }
+
 
     private class User_info_receiver extends BroadcastReceiver {
 

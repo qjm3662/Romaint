@@ -1,6 +1,7 @@
 package com.example.qjm3662.newproject.myself.settings;
 
 import android.app.Activity;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.qjm3662.newproject.App;
+import com.example.qjm3662.newproject.ChangeModeBroadCastReceiver;
 import com.example.qjm3662.newproject.R;
 
 public class Public_settings extends Activity implements View.OnClickListener {
@@ -23,9 +25,20 @@ public class Public_settings extends Activity implements View.OnClickListener {
     private Button btn_switch_fan;
     private Button btn_switch_like;
 
+    private ChangeModeBroadCastReceiver receiver;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (App.Switch_state_mode) {
+            this.setTheme(R.style.AppTheme_night);
+        } else {
+            this.setTheme(R.style.AppTheme_day);
+        }
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("CHANGE_MODE");
+        receiver = new ChangeModeBroadCastReceiver(this);
+        registerReceiver(receiver, intentFilter);
         setContentView(R.layout.activity_public_settings);
 
         img_bar_left = (ImageView) findViewById(R.id.cloud_imageView_story);
@@ -49,6 +62,12 @@ public class Public_settings extends Activity implements View.OnClickListener {
         btn_switch_like.setOnClickListener(this);
 
         initState();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(receiver);
     }
 
     private void initState() {

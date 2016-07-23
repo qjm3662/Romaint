@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:orientation="vertical"
+    android:background="?attr/mainBackground"
     android:layout_height="match_parent"
     tools:context=".myself.collection.collection">
 
@@ -11,6 +12,7 @@
     <include layout="@layout/title_bar"/>
 
     <ListView
+        android:background="?attr/ListViewBackground"
         android:layout_marginTop="@dimen/bar_high"
         android:id="@+id/android:list"
         android:layout_width="match_parent"
@@ -21,7 +23,7 @@
     <TextView
         android:textSize="24sp"
         android:layout_centerInParent="true"
-        android:textColor="@color/dark_normal"
+        android:textColor="?attr/textColorLight"
         android:id="@id/android:empty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

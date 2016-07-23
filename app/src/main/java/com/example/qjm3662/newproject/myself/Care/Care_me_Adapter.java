@@ -60,7 +60,7 @@ public class Care_me_Adapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        UserBase userBase = App.Public_Care_Other.get(position);
+        UserBase userBase = App.Public_Care_Me.get(position);
         viewHolder.tv_nickname.setText(userBase.getUserName());
         viewHolder.tv_sign.setText(userBase.getSign());
 

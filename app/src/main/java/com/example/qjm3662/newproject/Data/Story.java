@@ -11,6 +11,15 @@ public class Story extends StoryBean{
     boolean isOwn;              //是否是自己的故事
     public SlideView slideView;
 
+    @Override
+    public String toString() {
+        return "Story{" +
+                "local_id=" + local_id +
+                ", isOwn=" + isOwn +
+                ", slideView=" + slideView +
+                '}';
+    }
+
     public int getLocal_id() {
         return local_id;
     }

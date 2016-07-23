@@ -3,14 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="?attr/editView"
     android:orientation="vertical"
     tools:context="com.example.qjm3662.newproject.StoryView.Edit_Story.Edit_Story">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="62dp"
-        android:background="@color/white">
+        android:layout_height="62dp">
 
         <ImageView
             android:id="@+id/img_x"
@@ -47,14 +46,14 @@
             android:background="@drawable/rectangle_input"
             android:id="@+id/et_tile"
             android:textSize="20sp"
-            android:textColor="@color/dark_deep"
+            android:textColor="?attr/textColorDeep"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:hint="请输入标题"
-            android:textColorHint="@color/gray_normal" />
+            android:textColorHint="?attr/textColorLight" />
         <TextView
             android:layout_gravity="center_vertical"
             android:id="@+id/tv_flag"
@@ -88,11 +87,11 @@
         android:background="@drawable/rectangle_input"
         android:gravity="top"
         android:textSize="20sp"
-        android:textColor="@color/dark_deep"
+        android:textColor="?attr/textColorDeep"
         android:hint="请输入内容"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:textColorHint="@color/gray_normal"
+        android:textColorHint="?attr/textColorLight"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

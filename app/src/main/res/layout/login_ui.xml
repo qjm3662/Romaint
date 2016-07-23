@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/gray_light"
+    android:background="?attr/mainBackground"
     android:layout_height="match_parent"
     tools:context=".LoginAndRegister.LoginActivity"
     android:orientation="vertical">
@@ -26,7 +26,7 @@
         android:layout_height="@dimen/div_line" />
     <EditText
         android:id="@+id/login_phone"
-        android:background="#ffffff"
+        android:background="?attr/loginEditText"
         android:hint="@string/phone_number"
         android:paddingLeft="33dp"
         android:inputType="number"
@@ -40,7 +40,7 @@
         android:layout_height="@dimen/div_line" />
     <EditText
         android:id="@+id/login_password"
-        android:background="#ffffff"
+        android:background="?attr/loginEditText"
         android:hint="@string/input_password"
         android:paddingLeft="33dp"
         android:inputType="textPassword"
@@ -57,6 +57,7 @@
     <Button
         android:id="@+id/login_btn"
         android:layout_below="@id/login_password"
+        android:textColor="@color/white"
         android:layout_marginTop="23dp"
         android:gravity="center"
         android:background="@drawable/button_bg"
@@ -67,7 +68,7 @@
     
     <TextView
         android:id="@+id/forget_password"
-        android:textColor="@color/dark_deep"
+        android:textColor="?attr/textColorLight"
         android:layout_gravity="right"
         android:layout_marginTop="13dp"
         android:layout_marginRight="13dp"

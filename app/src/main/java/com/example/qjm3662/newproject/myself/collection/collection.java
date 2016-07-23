@@ -1,11 +1,14 @@
 package com.example.qjm3662.newproject.myself.collection;
 
 import android.app.ListActivity;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.qjm3662.newproject.App;
+import com.example.qjm3662.newproject.ChangeModeBroadCastReceiver;
 import com.example.qjm3662.newproject.R;
 
 public class collection extends ListActivity implements View.OnClickListener {
@@ -15,13 +18,31 @@ public class collection extends ListActivity implements View.OnClickListener {
     private TextView tv_bar_center;
     private TextView tv_bar_right;
 
+    private ChangeModeBroadCastReceiver receiver;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (App.Switch_state_mode) {
+            this.setTheme(R.style.AppTheme_night);
+        } else {
+            this.setTheme(R.style.AppTheme_day);
+        }
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("CHANGE_MODE");
+        receiver = new ChangeModeBroadCastReceiver(this);
+        registerReceiver(receiver, intentFilter);
+
         setContentView(R.layout.activity_collection);
         initBar();
         Collection_Adapter adapter = new Collection_Adapter(this);
         setListAdapter(adapter);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(receiver);
     }
 
     private void initBar() {
@@ -47,7 +68,7 @@ public class collection extends ListActivity implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.cloud_imageView_story:
                 onBackPressed();
                 break;

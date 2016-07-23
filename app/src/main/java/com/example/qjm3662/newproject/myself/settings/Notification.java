@@ -1,6 +1,7 @@
 package com.example.qjm3662.newproject.myself.settings;
 
 import android.app.Activity;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -8,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.qjm3662.newproject.App;
+import com.example.qjm3662.newproject.ChangeModeBroadCastReceiver;
 import com.example.qjm3662.newproject.R;
 
 public class Notification extends Activity implements View.OnClickListener {
@@ -21,9 +23,21 @@ public class Notification extends Activity implements View.OnClickListener {
     private Button btn_switch_inform_comment;
     private Button btn_switch_inform_collect;
 
+    private ChangeModeBroadCastReceiver receiver;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (App.Switch_state_mode) {
+            this.setTheme(R.style.AppTheme_night);
+        } else {
+            this.setTheme(R.style.AppTheme_day);
+        }
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("CHANGE_MODE");
+        receiver = new ChangeModeBroadCastReceiver(this);
+        registerReceiver(receiver, intentFilter);
+
         setContentView(R.layout.activity_notification);
 
         img_bar_left = (ImageView) findViewById(R.id.cloud_imageView_story);
@@ -48,6 +62,12 @@ public class Notification extends Activity implements View.OnClickListener {
 
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(receiver);
+    }
+
     private void initState() {
         if (App.Switch_state_is_inform_praise) {
             btn_switch_inform_praise.setBackgroundResource(R.drawable.img_switch_choose);
@@ -68,7 +88,7 @@ public class Notification extends Activity implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.inform_is_praise_switch:
                 System.out.println("a");
                 if (App.Switch_state_is_inform_praise) {

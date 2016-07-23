@@ -3,6 +3,7 @@ package com.example.qjm3662.newproject.myself.settings;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.qjm3662.newproject.App;
+import com.example.qjm3662.newproject.ChangeModeBroadCastReceiver;
 import com.example.qjm3662.newproject.Data.User;
 import com.example.qjm3662.newproject.Finding.Finding_fragment;
 import com.example.qjm3662.newproject.LoginAndRegister.LoginActivity;
@@ -33,11 +35,28 @@ public class my_settings extends Activity implements View.OnClickListener {
     private TextView tv_bar_right;
 
 
+    private ChangeModeBroadCastReceiver receiver;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (App.Switch_state_mode) {
+            this.setTheme(R.style.AppTheme_night);
+        } else {
+            this.setTheme(R.style.AppTheme_day);
+        }
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("CHANGE_MODE");
+        receiver = new ChangeModeBroadCastReceiver(this);
+        registerReceiver(receiver, intentFilter);
+
         setContentView(R.layout.activity_my_settings);
         initView();
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(receiver);
     }
 
     private void initView() {
@@ -125,7 +144,7 @@ public class my_settings extends Activity implements View.OnClickListener {
                 editor.apply();
 
                 App.clearInformation();
-                if(Finding_fragment.adapter != null){
+                if (Finding_fragment.adapter != null) {
                     Finding_fragment.adapter.notifyDataSetChanged();
                 }
 

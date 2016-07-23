@@ -3,11 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?attr/mainBackground"
     tools:context=".myself.Care.care">
 
     <include layout="@layout/title_bar"/>
 
     <ListView
+        android:background="?attr/ListViewBackground"
         android:layout_marginTop="@dimen/bar_high"
         android:id="@android:id/list"
         android:divider="@color/dark_light"
@@ -19,7 +21,7 @@
     <TextView
         android:textSize="24sp"
         android:layout_centerInParent="true"
-        android:textColor="@color/dark_normal"
+        android:textColor="?attr/textColorLight"
         android:id="@id/android:empty"
 
         android:layout_width="wrap_content"

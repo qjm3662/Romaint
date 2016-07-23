@@ -1,11 +1,13 @@
 package com.example.qjm3662.newproject;
 
 import android.app.Application;
+import android.app.ListActivity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.example.qjm3662.newproject.Data.CommentItem_add;
 import com.example.qjm3662.newproject.Data.Story;
 import com.example.qjm3662.newproject.Data.StoryBean;
 import com.example.qjm3662.newproject.Data.StoryDB;
@@ -23,6 +25,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TimeZone;
+
+import cn.jpush.android.api.JPushInterface;
 
 /**
  * Created by qjm3662 on 2016/5/30 0030.
@@ -49,6 +53,7 @@ public class App extends Application {
     public static List<UserBase> Public_Care_Me = new ArrayList<UserBase>();
     //我关注的人列表
     public static List<UserBase> Public_Care_Other = new ArrayList<UserBase>();
+
     //收藏故事列表
     public static List<StoryBean> Public_Collected_StoryList = new ArrayList<StoryBean>();
 
@@ -58,6 +63,11 @@ public class App extends Application {
     //我的文章列表
     public static List<StoryBean> Public_My_Article_StoryList = new ArrayList<StoryBean>();
 
+    //用于记录当前评论的是哪个文章
+    public static StoryBean comment_story = new StoryBean();
+
+    //评论列表
+    public static List<CommentItem_add> Public_Comment_List = new ArrayList<CommentItem_add>();
 
 
     public static boolean Switch_state_mode = false;
@@ -73,6 +83,9 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         Fresco.initialize(this);
+        //极光推送初始化
+        JPushInterface.setDebugMode(true);
+        JPushInterface.init(this);
 
         //获取数据库
         storyDB = new StoryDB(this);
@@ -89,7 +102,7 @@ public class App extends Application {
     }
 
 
-    public static void openDB(){
+    public static void openDB() {
         dbRead.close();
         dbWrite.close();
         dbRead = storyDB.getReadableDatabase();
@@ -98,17 +111,17 @@ public class App extends Application {
 
     public static void getUserInfo(Context context) {
         //用户详细信息
-        SharedPreferences sp = context.getSharedPreferences("User",MODE_PRIVATE);
+        SharedPreferences sp = context.getSharedPreferences("User", MODE_PRIVATE);
         //登陆返回信息
         SharedPreferences sp1 = context.getSharedPreferences("User_", MODE_PRIVATE);
-        if(sp != null){
-            Tool.str_to_user(sp.getString("user_info",null),sp1.getString("user_info",null));
+        if (sp != null) {
+            Tool.str_to_user(sp.getString("user_info", null), sp1.getString("user_info", null));
         }
     }
 
-    public static void getSwitchInfo(Context context){
+    public static void getSwitchInfo(Context context) {
         //用户详细信息
-        SharedPreferences sp = context.getSharedPreferences("Set_info",MODE_PRIVATE);
+        SharedPreferences sp = context.getSharedPreferences("Set_info", MODE_PRIVATE);
         Switch_state_mode = sp.getBoolean("Switch_state_mode", false);
         Switch_state_wifi_sync = sp.getBoolean("Switch_state_wifi_sync", false);
         Switch_state_is_public_fan = sp.getBoolean("Switch_state_is_public_fan", false);
@@ -118,7 +131,7 @@ public class App extends Application {
         Switch_state_is_inform_collect = sp.getBoolean("Switch_state_is_inform_collect", false);
     }
 
-    public static void updateSwitchInfo(Context context){
+    public static void updateSwitchInfo(Context context) {
         //将设置信息存储到SharePreferences中
         SharedPreferences sp = context.getSharedPreferences("Set_info", MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
@@ -151,7 +164,7 @@ public class App extends Application {
     }
 
 
-    public static void clearInformation(){
+    public static void clearInformation() {
         //广场故事列表
         Public_StoryList.clear();
         //与广场故事配套的，储存作者相关信息

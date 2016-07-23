@@ -3,12 +3,15 @@ package com.example.qjm3662.newproject.myself.Article;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.qjm3662.newproject.App;
+import com.example.qjm3662.newproject.ChangeModeBroadCastReceiver;
 import com.example.qjm3662.newproject.Data.User;
 import com.example.qjm3662.newproject.Data.UserBase;
 import com.example.qjm3662.newproject.Finding.StoryView;
@@ -28,9 +31,22 @@ public class ArticleActivity extends ListActivity implements View.OnClickListene
     public static PullToRefreshView mPullToRefreshView;
     private Context context;
 
+    private ChangeModeBroadCastReceiver receiver;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (App.Switch_state_mode) {
+            this.setTheme(R.style.AppTheme_night);
+        } else {
+            this.setTheme(R.style.AppTheme_day);
+        }
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("CHANGE_MODE");
+        receiver = new ChangeModeBroadCastReceiver(this);
+        registerReceiver(receiver, intentFilter);
+
+
         setContentView(R.layout.activity_article);
         context = this;
 
@@ -42,12 +58,18 @@ public class ArticleActivity extends ListActivity implements View.OnClickListene
         mPullToRefreshView.setOnRefreshListener(new PullToRefreshView.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                NetWorkOperator.Get_Person_Story_List(context,userBase.getId()+"", 1, 1);
+                NetWorkOperator.Get_Person_Story_List(context, userBase.getId() + "", 1, 1);
             }
         });
 
-        NetWorkOperator.Get_Person_Story_List(context,String.valueOf(userBase.getId()), 0, 1);
+        NetWorkOperator.Get_Person_Story_List(context, String.valueOf(userBase.getId()), 0, 1);
         initBar();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(receiver);
     }
 
 
@@ -83,9 +105,10 @@ public class ArticleActivity extends ListActivity implements View.OnClickListene
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 
+
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.cloud_imageView_story:
                 onBackPressed();
                 break;

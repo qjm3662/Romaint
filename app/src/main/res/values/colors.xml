@@ -7,7 +7,7 @@
     <color name="gray_normal">#c1bac1</color>
     <color name="gray_light">#ece9ec</color>
 
-    <color name="dark_deep">#202020</color>
+    <color name="dark_deep">#2e2e2e</color>
     <color name="dark_normal">#535353</color>
     <color name="dark_light">#a5a5a5</color>
 
@@ -17,7 +17,6 @@
     <color name="blue_light">#e9faf8</color>
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
-
-
+    <color name="night_light">#464646</color>
 
 </resources>
